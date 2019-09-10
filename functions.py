@@ -93,3 +93,11 @@ def toSys(pos):
 
   if (let in listY) and 1 <= int(num) <= 8:
     return listX.index(int(num)), listY.index(let)
+
+#------------------------------------------------------
+#prints space to separe content
+def space():
+  print("")
+  print("")
+  print("")
+  print("")
