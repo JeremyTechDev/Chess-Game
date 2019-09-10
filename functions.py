@@ -73,3 +73,23 @@ def movePieceTo(piece, x, y):
       piece.moveTo(x, y)
     else:
       print("Spot occupied by your chessman")
+
+#------------------------------------------------------
+#returns [x][y] position on board style [ch][#]
+def toBoard(x, y):
+  listX = [8,7,6,5,4,3,2,1]
+  listY = ["A","B","C","D","E","F","G","H"]
+
+  return listY[y] + str(listX[x])
+
+#------------------------------------------------------
+#returns [ch][#] position on sys style [x][y]
+def toSys(pos):
+  let = (pos[0]).upper()
+  num = pos[1]
+
+  listY = ["A","B","C","D","E","F","G","H"]
+  listX = [8,7,6,5,4,3,2,1]
+
+  if (let in listY) and 1 <= int(num) <= 8:
+    return listX.index(int(num)), listY.index(let)
