@@ -28,3 +28,15 @@ chessman_names = {
   sbki: "Black King",
   sbq: "Black Queen",
 }
+
+#LEGEND
+legend = [
+  "| CHESS SYMBOLS",
+  "|   W B",
+  "|   ♔ ♚ KINGS",
+  "|   ♕ ♛ QUEENS",
+  "|   ♖ ♜ ROOKS",
+  "|   ♘ ♞ KNIGHTS",
+  "|   ♗ ♝ BISHOPS",
+  "|   ♙ ♟ PAWNS",
+]
