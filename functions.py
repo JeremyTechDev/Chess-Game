@@ -47,3 +47,13 @@ def getSymbol(x,y):
       if piece.x == x and piece.y == y:
         return " " + piece.chessman + " "
   return "[ ]"
+
+#------------------------------------------------------
+#Returns the piece at given position [x][y]
+#Return None if there is no piece at position [x][y]
+def getPieceAtPosition(x,y):
+  for piece in all_pieces:
+    if piece.onGame == True:
+      if piece.x == x and piece.y == y:
+        return piece
+  return None
