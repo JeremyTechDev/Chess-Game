@@ -27,3 +27,28 @@ class Piece():
   def moveTo(self, x, y):
       self.x = x
       self.y = y
+
+#CHILD OBJECTS
+class pawn(Piece):
+  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman) 
+
+class rook(Piece):
+  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman) 
+
+class knight(Piece):
+  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman)
+
+class bishop(Piece):
+  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman) 
+
+class king(Piece):
+  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman) 
+
+class queen(Piece):
+  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman) 
