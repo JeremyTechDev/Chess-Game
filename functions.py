@@ -57,3 +57,19 @@ def getPieceAtPosition(x,y):
       if piece.x == x and piece.y == y:
         return piece
   return None
+
+#------------------------------------------------------
+def movePieceTo(piece, x, y):
+  if not checkForPiece(x,y):
+    piece.moveTo(x, y)
+  else:
+    pieceOnSpot = getPieceAtPosition(x, y)
+    if pieceOnSpot.team != piece.team:
+      #to print kill message
+      killed = chessman_names[pieceOnSpot.chessman]
+      killer = chessman_names[piece.chessman]
+      print(killed + " killed by a " + killer)
+      pieceOnSpot.kill()
+      piece.moveTo(x, y)
+    else:
+      print("Spot occupied by your chessman")
