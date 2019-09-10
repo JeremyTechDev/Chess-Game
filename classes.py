@@ -53,6 +53,14 @@ class queen(Piece):
   def __init__(self, x, y, team, chessman):
     Piece.__init__(self, x, y, team, chessman) 
 
+"""
+INITIAL POSITIONS
+Position are set by the index of each list,
+NOT by a matrix. "X" is number of the list and
+"Y" is the index of the listX.
+Position [0][0] is the top left spot
+Position [7][7] is the bottom right spot
+"""
 
 #WHITES
 wp1 = pawn(6,0,"w", swp)
