@@ -40,3 +40,7 @@ legend = [
   "|   ♗ ♝ BISHOPS",
   "|   ♙ ♟ PAWNS",
 ]
+
+#Visualizers for the board
+lets = ["(A)","(B)","(C)","(D)","(E)","(F)","(G)","(H)"]
+nums = ["(8)","(7)","(6)","(5)","(4)","(3)","(2)","(1)"]
