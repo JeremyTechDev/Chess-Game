@@ -26,3 +26,13 @@ def print_board(board):
     #corresponding to the legend
     print(nums[i] + st + " " + legend[i])
   space()
+
+#------------------------------------------------------
+#Returns True if there is a piece in [x][y]
+#otherwise, returns False
+def checkForPiece(x, y):
+  for piece in all_pieces:
+    if piece.onGame == True:
+      if piece.x == x and piece.y == y:
+        return True 
+  return False
