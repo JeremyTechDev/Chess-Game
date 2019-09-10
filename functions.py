@@ -36,3 +36,14 @@ def checkForPiece(x, y):
       if piece.x == x and piece.y == y:
         return True 
   return False
+
+#------------------------------------------------------
+#Return the type of piece that there is in
+#[x][y]. Ex: bp1 --> white pawn 
+#To print the right symbol 
+def getSymbol(x,y):
+  for piece in all_pieces:
+    if piece.onGame == True:
+      if piece.x == x and piece.y == y:
+        return " " + piece.chessman + " "
+  return "[ ]"
