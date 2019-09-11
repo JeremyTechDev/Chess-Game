@@ -113,11 +113,6 @@ all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp
 #prints the board with the actuals positions
 def print_board(board):
   print("")
-  #print upper letters
-  print("   ", end="")
-  for i in lets:
-    print(i, end="")
-  print("")
 
   #prints each row
   for i in range(0, 8):
@@ -133,6 +128,13 @@ def print_board(board):
     #print num of row, then the array, and then the part 
     #corresponding to the legend
     print(nums[i] + st + " " + legend[i])
+
+  #print upper letters
+  print("   ", end="")
+  for i in lets:
+    print(i, end="")
+  print("")
+  
   space()
 
 #------------------------------------------------------
