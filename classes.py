@@ -31,7 +31,8 @@ class Piece():
 #CHILD OBJECTS
 class pawn(Piece):
   def __init__(self, x, y, team, chessman):
-    Piece.__init__(self, x, y, team, chessman) 
+    Piece.__init__(self, x, y, team, chessman)
+    self.firstMove = True 
 
 class rook(Piece):
   def __init__(self, x, y, team, chessman):
