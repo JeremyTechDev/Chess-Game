@@ -223,6 +223,25 @@ def space():
     [a][b] == [x][y] used not to change any data
 """
 
+#------------------------------------------------------
+#Discards all imposible moves for any piece
+def discardImMoves(piece, moves):
+
+  #check if piece on move spot
+  for move in moves:
+    if checkForPiece(move[0], move[1]):
+      pieceAtSpot = getPieceAtPosition(move[0], move[1])
+      if piece.team == pieceAtSpot.team:
+        #if piece is the same team, remove that move
+        moves.remove(move)
+
+  #deletes moves outside of the board
+  for move in moves:
+    for cord in move:
+      if cord < 0 or cord > 7:
+        moves.remove(move)
+
+return moves #returns all posible moves for a piece
 
 #------------------------------------------------------
 #Return ALL the moves for pawns
