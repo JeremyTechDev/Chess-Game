@@ -1,5 +1,5 @@
-from symbols import nums,lets
-from classes import *
+from symbols import nums, lets, legend, chessman_names
+from classes import all_pieces
 
 #------------------------------------------------------
 #prints the board with the actuals positions
@@ -61,6 +61,10 @@ def getPieceAtPosition(x,y):
 #------------------------------------------------------
 def movePieceTo(piece, x, y):
   if not checkForPiece(x,y):
+    #print the piece that moved
+    moved = chessman_names[piece.chessman]
+    position = toBoard(x,y) #gets boards position
+    print(moved + " moved to " + position)
     piece.moveTo(x, y)
   else:
     pieceOnSpot = getPieceAtPosition(x, y)
