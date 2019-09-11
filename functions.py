@@ -216,46 +216,66 @@ def space():
 
 
 """
-    GETTERS OF PIECE MOVES
+            GETTERS OF PIECE MOVES
     returns a list if ALL the moves a piece can make
     LATER, we remove the impossible moves
+    needs the position of the piece [x][y] and the piece
+    [a][b] == [x][y] used not to change any data
 """
 
 
 #------------------------------------------------------
 #Return ALL the moves for pawns
-#need the position of the piece [x][y]
-#[a][b] == [x][y] used not to change any data
-def getAllPawnsMove(piece, x, y):
+def getAllPawnsMoves(pawn, x, y):
   moves = [] #the return item
   a = x
   b = y
 
   #check move direction by team
-  if (piece.team == "w"):
+  if (pawn.team == "w"):
     a -= 1
     moves.append([a, b]) #one step up
 
-    if (piece.firstMove == True):
-      piece.firstMove = False
+    if (pawn.firstMove == True):
+      pawn.firstMove = False
       moves.append([a-1,b]) #two steps up
   else:
     a += 1
     moves.append([a, b]) #one step down
-    if (piece.firstMove == True):
-      piece.firstMove = False
+    if (pawn.firstMove == True):
+      pawn.firstMove = False
       moves.append([a+1,b])  #two step down
   
   #check if piece can eat an other
   possEat1 = [a,b-1] #possible Eat 1
   possEat2 = [a,b+1] #possible Eat 1
   if (checkForPiece(possEat1[0], possEat1[1]) == True): #if there is a piece
-    if (getPieceAtPosition(possEat1[0], possEat1[1]).team != piece.team): 
+    if (getPieceAtPosition(possEat1[0], possEat1[1]).team != pawn.team): 
       moves.append(possEat1) #if is different team, add move
   #same with second piece
   if (checkForPiece(possEat2[0], possEat2[1]) == True):
-    if (getPieceAtPosition(possEat2[0], possEat2[1]).team != piece.team):
+    if (getPieceAtPosition(possEat2[0], possEat2[1]).team != pawn.team):
       moves.append(possEat2)
 
   return moves
+
+#----------------------------------------------------
+#Returns ALL the moves for knights
+def getAllKnightMoves(knight, x, y):
+  moves = [] #the return item
+  a = x
+  b = y
+
+  #there are just 8 moves for every knight
+  moves.append([a-2, b+1])
+  moves.append([a-1, b+2])
+  moves.append([a+1, b+2])
+  moves.append([a+2, b+1])
+  moves.append([a+2, b-1])
+  moves.append([a+1, b-2])
+  moves.append([a-1, b-2])
+  moves.append([a-2, b-1])
+
+  return moves
+
 
