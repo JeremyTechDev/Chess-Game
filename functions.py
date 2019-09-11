@@ -235,13 +235,19 @@ def discardImMoves(piece, moves):
         #if piece is the same team, remove that move
         moves.remove(move)
 
-  #deletes moves outside of the board
+  #identifies moves outside of the board
+  toDelete = []
   for move in moves:
     for cord in move:
       if cord < 0 or cord > 7:
-        moves.remove(move)
+        toDelete.append(move)
 
-return moves #returns all posible moves for a piece
+  #deletes moves outside the board
+  for i in toDelete:
+    if i in moves:
+      moves.remove(i)
+
+  return moves #returns all posible moves for a piece
 
 #------------------------------------------------------
 #Return ALL the moves for pawns
@@ -276,7 +282,7 @@ def getAllPawnsMoves(pawn, x, y):
     if (getPieceAtPosition(possEat2[0], possEat2[1]).team != pawn.team):
       moves.append(possEat2)
 
-  return moves
+  return discardImMoves(pawn, moves)
 
 #----------------------------------------------------
 #Returns ALL the moves for knights
@@ -295,6 +301,6 @@ def getAllKnightMoves(knight, x, y):
   moves.append([a-1, b-2])
   moves.append([a-2, b-1])
 
-  return moves
+  return discardImMoves(knight, moves)
 
 
