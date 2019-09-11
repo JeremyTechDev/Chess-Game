@@ -13,3 +13,8 @@ board = [
 ]
 
 print_board(board)
+
+#probitional: to print pieces' moves
+a = (getAllKnightMoves(wk2, wk2.x, wk2.y))
+for i in a:
+  print(toBoard(i[0],i[1]), end=" - ")
