@@ -31,14 +31,14 @@ chessman_names = {
 
 #LEGEND
 legend = [
-  "| CHESS SYMBOLS",
-  "|   W B",
-  "|   ♔ ♚ KINGS",
-  "|   ♕ ♛ QUEENS",
-  "|   ♖ ♜ ROOKS",
-  "|   ♘ ♞ KNIGHTS",
-  "|   ♗ ♝ BISHOPS",
-  "|   ♙ ♟ PAWNS",
+  "| SYMBOLS",
+  "| W B",
+  "| ♔ ♚ KINGS",
+  "| ♕ ♛ QUEENS",
+  "| ♖ ♜ ROOKS",
+  "| ♘ ♞ KNIGHTS",
+  "| ♗ ♝ BISHOPS",
+  "| ♙ ♟ PAWNS",
 ]
 
 #Visualizers for the board
