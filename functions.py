@@ -228,6 +228,7 @@ def space():
 #------------------------------------------------------
 #Discards all imposible moves for any piece
 def discardImMoves(piece, moves):
+  toDelete = []
 
   #check if piece on move spot
   for move in moves:
@@ -235,10 +236,9 @@ def discardImMoves(piece, moves):
       pieceAtSpot = getPieceAtPosition(move[0], move[1])
       if piece.team == pieceAtSpot.team:
         #if piece is the same team, remove that move
-        moves.remove(move)
+        toDelete.append(move)
 
   #identifies moves outside of the board
-  toDelete = []
   for move in moves:
     for cord in move:
       if cord < 0 or cord > 7:
