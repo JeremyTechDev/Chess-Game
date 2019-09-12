@@ -253,7 +253,7 @@ def discardImMoves(piece, moves):
 
 #------------------------------------------------------
 #Return ALL the moves for pawns
-def getAllPawnsMoves(pawn, x, y):
+def getAllPawnMoves(pawn, x, y):
   moves = [] #the return item
   a = x
   b = y
@@ -304,5 +304,24 @@ def getAllKnightMoves(knight, x, y):
   moves.append([a-2, b-1])
 
   return discardImMoves(knight, moves)
+
+#----------------------------------------------------
+#Returns ALL the moves for king
+def getAllKingMoves(king, x, y):
+  moves = [] #the return item
+  a = x
+  b = y
+
+  #there are just 8 moves for every king
+  moves.append([a-1, b])
+  moves.append([a-1, b+1])
+  moves.append([a, b+1])
+  moves.append([a+1, b+1])
+  moves.append([a+1, b])
+  moves.append([a+1, b-1])
+  moves.append([a, b-1])
+  moves.append([a-1, b-1])
+
+  return discardImMoves(king, moves)
 
 
