@@ -2,7 +2,6 @@
 from symbols import nums, lets, legend, chessman_names
 
 
-
 from symbols import *
 #from functions import *
 
@@ -108,10 +107,19 @@ all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp
 
 
 
-
+board = [
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
+  ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"]
+]
 #------------------------------------------------------
 #prints the board with the actuals positions
-def print_board(board):
+def print_board():
   print("")
 
   #prints each row
