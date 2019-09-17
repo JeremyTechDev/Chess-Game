@@ -248,7 +248,13 @@ def discardImMoves(piece, moves):
     if i in moves:
       moves.remove(i)
 
-  return moves #returns all posible moves for a piece
+  #identifies repeated moves and discard them
+  finalMoves = []
+  for move in moves:
+    if move not in finalMoves:
+      finalMoves.append(move)
+
+  return finalMoves #returns all posible moves for a piece
 
 #------------------------------------------------------
 #Return ALL the moves for pawns
