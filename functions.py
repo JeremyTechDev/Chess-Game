@@ -336,6 +336,12 @@ def getRookMoves(rook, x, y):
   a = x
   b = y  
 
+  #stats adding the four next-moves
+  moves.append([a+1, b])
+  moves.append([a-1, b])
+  moves.append([a, b+1])
+  moves.append([a, b-1])
+
   i = 1
   #while pos[a,b] is on board
   #GOING UP THE BOARD
@@ -378,9 +384,7 @@ def getRookMoves(rook, x, y):
         moves.append([a, b+i+1])
     i += 1
 
-  #no need to discard Impossible Changes,
-  #they are not added to moves
-  return moves
+  return discardImMoves(rook, moves)
 
 #----------------------------------------------------
 #Returns ALL the moves for bishop
