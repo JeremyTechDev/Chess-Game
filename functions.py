@@ -324,8 +324,53 @@ def getKingMoves(king, x, y):
   return discardImMoves(king, moves)
 
 #----------------------------------------------------
-#Returns ALL the moves for Bishop
-def getRookMoves(bishop, x, y):
+#Returns ALL the moves for rook
+def getRookMoves(rook, x, y):
   moves = [] #the return item
   a = x
   b = y  
+
+  i = 1
+  #while pos[a,b] is on board
+  #GOING UP THE BOARD
+  while(not checkForPiece(a-i, b) and (a-i >= 0)):
+    moves.append([a-i, b])
+
+    #checks if rook can eat a piece and add that move as possible
+    if (checkForPiece(a-i-1, b)):
+      if(getPieceAtPosition(a-i-1, b).team != rook.team):
+        moves.append([a-i-1, b])
+    i += 1
+
+  i = 1
+  #GOING DOWN THE BOARD
+  while(not checkForPiece(a+i, b) and (a+i <= 7)):
+    moves.append([a+i, b])
+
+    if(checkForPiece(a+i+1, b)):
+      if (getPieceAtPosition(a+i+1, b).team != rook.team):
+        moves.append([a+i+1, b])
+    i += 1
+  
+  i = 1
+  #GOING LEFT THE BOARD
+  while(not checkForPiece(a, b-i) and (b-i >= 0)):
+    moves.append([a, b-i])
+
+    if(checkForPiece(a, b-i-1)):
+      if (getPieceAtPosition(a, b-i-1).team != rook.team):
+        moves.append([a, b-i-1])
+    i += 1
+
+  i = 1
+  #GOING RIGHT THE BOARD
+  while(not checkForPiece(a, b+i) and (b+i <= 7)):
+    moves.append([a, b+i])
+
+    if(checkForPiece(a, b+i+1)):
+      if (getPieceAtPosition(a, b+i+1).team != rook.team):
+        moves.append([a, b+i+1])
+    i += 1
+
+  #no need to discard Impossible Changes, they are not added to moves
+  return moves
