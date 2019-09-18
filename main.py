@@ -5,12 +5,21 @@ from functions import *
 
 #-------------------------------------------------------
 def runTurn(team):
+  #prints actual state of the board
+  printBoard(None)
+
+  #shows the player that have to make the move
+  if team == "w":
+    print("> WHITES'S Turn <")
+  else:
+    print("> BLACK'S Turn <")
+
   print("Insert the position of the piece to move:")
   piecePosition = toSys(input())
 
   #if the choice is ok, it continues
   #otherwise ask the piece again
-  if validateForPiece(piecePosition, "w"):
+  if validateForPiece(piecePosition, team):
     #set piece position [x][y]
     x = piecePosition[0]
     y = piecePosition[1]
@@ -23,10 +32,17 @@ def runTurn(team):
 
     #shows choices for the move of the piece
     print("Chose your next move for the " + chessman_names[piece.chessman] +":")
-    for i in range(1, len(allPossibleMoves)+1):
-      posX = allPossibleMoves[i-1][0]
-      posY = allPossibleMoves[i-1][1]
-      print(">>> " + str(i) + ". " + toBoard(posX, posY))
+    for move in allPossibleMoves:
+      posX = move[0]
+      posY = move[1]
+      print(">>> " + toBoard(posX, posY))
+    
+    #tries to make the move
+    spot = toSys(input())
+    if [spot[0], spot[1]] in allPossibleMoves:
+      movePieceTo(piece, spot[0], spot[1])
+    else:
+      print("Move not possible")
   else:
     print("Ask again")
 
@@ -77,13 +93,13 @@ prints the last move of the game.
 >4. The same with the next player
 """
 def startGame():
-  printBoard(None)
   #runs while the game is not over
   gameOver = False
   while not gameOver:
     
     runTurn("w")
-    gameOver = True
+    runTurn("b")
+    #gameOver = True
 
 
 """
