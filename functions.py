@@ -450,15 +450,14 @@ def getBishopMoves(bishop, x, y):
 
 #---------------------------------------------------
 #Returns Queen moves
+"""
+As queen moves are equal to all the moves of the king, bishop and rook
+This function adds together all those moves from that position
+"""
 def getQueenMoves(queen, x, y):
   moves = [] #return item
   a = x
   b = y
-
-  """
-  As queen moves are equal to all the moves of the king, bishop and rook
-  This function adds together all those moves from that position
-  """
 
   #Get all moves
   kingMoves = getKingMoves(queen, x, y)
