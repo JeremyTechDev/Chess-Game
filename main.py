@@ -3,6 +3,24 @@ from functions import *
 
 #Main functions of the game
 
+#return the getMoves funtions that must be used
+#depending on the piece chosen by the user
+def getMoveFunction(piece):
+  if piece.__class__ == pawn:
+    return getPawnMoves
+  elif piece.__class__ == rook:
+    return getRookMoves
+  elif piece.__class__ == knight:
+    return getKnightMoves
+  elif piece.__class__ == bishop:
+    return getBishopMoves
+  elif piece.__class__ == king:
+    return getKingMoves
+  elif piece.__class__ == queen:
+    return getQueenMoves
+
+
+
 #return True if the choosen piece to move is able to move
 #takes in consideration if there is a piece is that pos and
 #if the piece is the same team of the player in turn
@@ -14,7 +32,7 @@ def validateForPiece(piecePosition, team):
   else:
     if getPieceAtPosition(x, y).team != team:
       return False
-      
+
   return True
   
 
@@ -40,7 +58,18 @@ def startGame():
     #ask for the piece to move
     print("Insert the position of the piece to move:")
     piecePosition = toSys(input())
-    print(validateForPiece(piecePosition, "w"))
+
+    #if the choice is ok, it continues
+    #otherwise ask the piece again
+    if validateForPiece(piecePosition, "w"):
+      x = piecePosition[0]
+      y = piecePosition[1]
+      piece = getPieceAtPosition(x, y)
+      allPossibleMoves = getMoveFunction(piece)(piece, x, y)
+      printBoard(allPossibleMoves)
+    else:
+      print("Ask again")
+    
     gameOver = True
 
 
