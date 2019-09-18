@@ -119,7 +119,7 @@ board = [
 ]
 #------------------------------------------------------
 #prints the board with the actuals positions
-def print_board(spots):
+def printBoard(spots):
   print("")
 
   #prints each row
