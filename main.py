@@ -3,6 +3,34 @@ from functions import *
 
 #Main functions of the game
 
+#-------------------------------------------------------
+def runTurn(team):
+  print("Insert the position of the piece to move:")
+  piecePosition = toSys(input())
+
+  #if the choice is ok, it continues
+  #otherwise ask the piece again
+  if validateForPiece(piecePosition, "w"):
+    #set piece position [x][y]
+    x = piecePosition[0]
+    y = piecePosition[1]
+    #get the specific piece
+    piece = getPieceAtPosition(x, y)
+    #find all moves for the piece after finding the piece type with getMoveFunction(piece)
+    allPossibleMoves = getMoveFunction(piece)(piece, x, y)
+    #prints the board showing the possible moves of the piece chosen as ( )
+    printBoard(allPossibleMoves)
+
+    #shows choices for the move of the piece
+    print("Chose your next move for the " + chessman_names[piece.chessman] +":")
+    for i in range(1, len(allPossibleMoves)+1):
+      posX = allPossibleMoves[i-1][0]
+      posY = allPossibleMoves[i-1][1]
+      print(">>> " + str(i) + ". " + toBoard(posX, posY))
+  else:
+    print("Ask again")
+
+#--------------------------------------------------------
 #return the getMoves funtions that must be used
 #depending on the piece chosen by the user
 def getMoveFunction(piece):
@@ -19,8 +47,7 @@ def getMoveFunction(piece):
   elif piece.__class__ == queen:
     return getQueenMoves
 
-
-
+#--------------------------------------------------------------
 #return True if the choosen piece to move is able to move
 #takes in consideration if there is a piece is that pos and
 #if the piece is the same team of the player in turn
@@ -54,22 +81,8 @@ def startGame():
   #runs while the game is not over
   gameOver = False
   while not gameOver:
-    #WHITES TURN
-    #ask for the piece to move
-    print("Insert the position of the piece to move:")
-    piecePosition = toSys(input())
-
-    #if the choice is ok, it continues
-    #otherwise ask the piece again
-    if validateForPiece(piecePosition, "w"):
-      x = piecePosition[0]
-      y = piecePosition[1]
-      piece = getPieceAtPosition(x, y)
-      allPossibleMoves = getMoveFunction(piece)(piece, x, y)
-      printBoard(allPossibleMoves)
-    else:
-      print("Ask again")
     
+    runTurn("w")
     gameOver = True
 
 
