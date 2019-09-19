@@ -99,8 +99,8 @@ def startGame():
     
     runTurn("w")
     runTurn("b")
+    print(whitePieces, blackPieces)
     #gameOver = True
-
 
 """
 printBoard(None)
@@ -112,6 +112,4 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-#startGame()
-printBoard(None)
-print(toSys("8a"))
+startGame()

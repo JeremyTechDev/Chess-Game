@@ -103,6 +103,8 @@ bb2 = bishop(0,5,"b", sbb)
 bki = king(0,3,"b", sbki)
 bqu = queen(0,4,"b", sbq)
 
+whitePieces = 16
+blackPieces = 16
 all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 
 
@@ -183,6 +185,7 @@ def getPieceAtPosition(x,y):
 
 #------------------------------------------------------
 def movePieceTo(piece, x, y):
+  global blackPieces, whitePieces
   if not checkForPiece(x,y):
     #print the piece that moved
     moved = chessman_names[piece.chessman]
@@ -196,8 +199,15 @@ def movePieceTo(piece, x, y):
       killed = chessman_names[pieceOnSpot.chessman]
       killer = chessman_names[piece.chessman]
       print(killed + " killed by a " + killer)
+
       pieceOnSpot.kill()
       piece.moveTo(x, y)
+
+      #decrease by one the number of pieces
+      if pieceOnSpot.team == "w":
+        whitePieces -= 1
+      else:
+        blackPieces -= 1
     else:
       print("Spot occupied by your chessman")
 
@@ -211,15 +221,14 @@ def toBoard(x, y):
 
 #------------------------------------------------------
 #returns [ch][#] position on sys style [x][y]
+#accepts either values like a8 or 8a
 def toSys(pos):
   if pos[0].isnumeric():
     num = pos[0]
     let = (pos[1]).upper()
-    print("num")
   else:
     let = (pos[0]).upper()
     num = pos[1]
-    print("let")
 
   listY = ["A","B","C","D","E","F","G","H"]
   listX = [8,7,6,5,4,3,2,1]
