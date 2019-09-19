@@ -112,4 +112,6 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-startGame()
+#startGame()
+printBoard(None)
+print(toSys("8a"))

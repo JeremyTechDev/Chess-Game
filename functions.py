@@ -212,8 +212,14 @@ def toBoard(x, y):
 #------------------------------------------------------
 #returns [ch][#] position on sys style [x][y]
 def toSys(pos):
-  let = (pos[0]).upper()
-  num = pos[1]
+  if pos[0].isnumeric():
+    num = pos[0]
+    let = (pos[1]).upper()
+    print("num")
+  else:
+    let = (pos[0]).upper()
+    num = pos[1]
+    print("let")
 
   listY = ["A","B","C","D","E","F","G","H"]
   listX = [8,7,6,5,4,3,2,1]
