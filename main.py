@@ -2,6 +2,8 @@ from classes import *
 from functions import *
 
 #Main functions of the game
+#whitePieces = 16
+#blackPieces = 16
 
 #-------------------------------------------------------
 def runTurn(team):
@@ -99,7 +101,6 @@ def startGame():
     
     runTurn("w")
     runTurn("b")
-    print(whitePieces, blackPieces)
     #gameOver = True
 
 """
@@ -112,4 +113,5 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
+movePieceTo(wp1, 2,0)
 startGame()

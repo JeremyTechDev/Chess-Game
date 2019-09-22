@@ -103,8 +103,6 @@ bb2 = bishop(0,5,"b", sbb)
 bki = king(0,3,"b", sbki)
 bqu = queen(0,4,"b", sbq)
 
-whitePieces = 16
-blackPieces = 16
 all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 
 
@@ -185,7 +183,6 @@ def getPieceAtPosition(x,y):
 
 #------------------------------------------------------
 def movePieceTo(piece, x, y):
-  global blackPieces, whitePieces
   if not checkForPiece(x,y):
     #print the piece that moved
     moved = chessman_names[piece.chessman]
@@ -203,11 +200,13 @@ def movePieceTo(piece, x, y):
       pieceOnSpot.kill()
       piece.moveTo(x, y)
 
+      """
       #decrease by one the number of pieces
       if pieceOnSpot.team == "w":
         whitePieces -= 1
       else:
         blackPieces -= 1
+      """
     else:
       print("Spot occupied by your chessman")
 
@@ -287,17 +286,20 @@ def getPawnMoves(pawn, x, y):
   #check move direction by team
   if (pawn.team == "w"):
     a -= 1
-    moves.append([a, b]) #one step up
+    if not checkForPiece(a, b): #if front is empty
+      moves.append([a, b]) #one step up
 
-    if (pawn.firstMove == True):
-      pawn.firstMove = False
-      moves.append([a-1,b]) #two steps up
+      if (pawn.firstMove == True and not checkForPiece(a-1, b)):
+        pawn.firstMove = False
+        moves.append([a-1,b]) #two steps up
   else:
     a += 1
-    moves.append([a, b]) #one step down
-    if (pawn.firstMove == True):
-      pawn.firstMove = False
-      moves.append([a+1,b])  #two step down
+    if not checkForPiece(a, b): #if front is empty
+      moves.append([a, b]) #one step down
+
+      if (pawn.firstMove == True and not checkForPiece(a+1, b)):
+        pawn.firstMove = False
+        moves.append([a+1,b])  #two step down
   
   #check if piece can eat an other
   possEat1 = [a,b-1] #possible Eat 1
