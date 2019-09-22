@@ -17,7 +17,14 @@ def runTurn(team):
     print("> BLACK'S Turn <")
 
   print("Insert the position of the piece to move:")
-  piecePosition = toSys(input())
+  
+  while True:
+    piecePosition = input()
+    if toSys(piecePosition):
+      piecePosition = toSys(piecePosition)
+      break
+    else:
+      print("Invaid position, try another one")
 
   #if the choice is ok, it continues
   #otherwise ask the piece again
