@@ -7,53 +7,69 @@ from functions import *
 
 #-------------------------------------------------------
 def runTurn(team):
-  #prints actual state of the board
-  printBoard(None)
-
-  #shows the player that have to make the move
-  if team == "w":
-    print("> WHITES'S Turn <")
-  else:
-    print("> BLACK'S Turn <")
-
-  print("Insert the position of the piece to move:")
-  
+  #checks that the user's choice is ok and that there are moves for that piece
   while True:
+    print("Insert the position of the piece to move:")
     piecePosition = input()
     if toSys(piecePosition):
+      #the position in this variable is ok
       piecePosition = toSys(piecePosition)
-      break
+
+      #check that there are possible moves,
+      #otherwive, asks again for position
+      if validateForPiece(piecePosition, team):
+        #set piece position [x][y]
+        x = piecePosition[0]
+        y = piecePosition[1]
+        #get the specific piece
+        piece = getPieceAtPosition(x, y)
+        #find all moves for the piece after finding the piece type with getMoveFunction(piece)
+        allPossibleMoves = getMoveFunction(piece)(piece, x, y)
+
+        if len(allPossibleMoves) == 0:
+          print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
+        else:
+          #prints the board showing the possible moves of the piece chosen as ( )
+          printBoard(allPossibleMoves)
+
+          #shows choices for the move of the piece
+          print("Chose your next move for the " + chessman_names[piece.chessman] +":")
+          for move in allPossibleMoves:
+            posX = move[0]
+            posY = move[1]
+            print(">>> " + toBoard(posX, posY))
+          #shows a option in case user what to change piece
+          print("")
+          print('Insert "0" if you want to chose another piece')
+          
+          #read the position to
+          while True:
+            positionTo = input()
+
+            if positionTo == "0":
+              printBoard(None)
+              runTurn(team)
+              break
+
+            if toSys(positionTo):
+              positionTo = toSys(positionTo)
+
+              if [positionTo[0], positionTo[1]] in allPossibleMoves:
+                movePieceTo(piece, positionTo[0], positionTo[1])
+                break
+              else:
+                print("That move is not possible, check the list and try again")
+
+            else:
+              print("Invaid position, try another one")
+
+          break #finishes the while with all success by the user
+
+      else:
+        print("Empty spot, try another one")
+
     else:
       print("Invaid position, try another one")
-
-  #if the choice is ok, it continues
-  #otherwise ask the piece again
-  if validateForPiece(piecePosition, team):
-    #set piece position [x][y]
-    x = piecePosition[0]
-    y = piecePosition[1]
-    #get the specific piece
-    piece = getPieceAtPosition(x, y)
-    #find all moves for the piece after finding the piece type with getMoveFunction(piece)
-    allPossibleMoves = getMoveFunction(piece)(piece, x, y)
-    #prints the board showing the possible moves of the piece chosen as ( )
-    printBoard(allPossibleMoves)
-
-    #shows choices for the move of the piece
-    print("Chose your next move for the " + chessman_names[piece.chessman] +":")
-    for move in allPossibleMoves:
-      posX = move[0]
-      posY = move[1]
-      print(">>> " + toBoard(posX, posY))
-    
-    #tries to make the move
-    spot = toSys(input())
-    if [spot[0], spot[1]] in allPossibleMoves:
-      movePieceTo(piece, spot[0], spot[1])
-    else:
-      print("Move not possible")
-  else:
-    print("Ask again")
 
 #--------------------------------------------------------
 #return the getMoves funtions that must be used
@@ -106,7 +122,12 @@ def startGame():
   gameOver = False
   while not gameOver:
     
+    printBoard(None)
+    print(">>> WHITE'S TURN")
     runTurn("w")
+
+    printBoard(None)
+    print(">>> BLACK'S TURN")
     runTurn("b")
     #gameOver = True
 
