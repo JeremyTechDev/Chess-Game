@@ -166,12 +166,12 @@ def printBoard(spots):
       #otherwise, prints empty space '[ ]'
       if (checkForPiece(i,j)):
         if((spots != None) and ([i, j] in spots)): #checks if move-spot in position to print ()
-          st += ">" + getSymbol(i, j)[1] + "<"
+          st += "(" + getSymbol(i, j)[1] + ")"
         else: #otherwise, only prints the piece 
           st += getSymbol(i,j)
       else:
         if((spots != None) and ([i, j] in spots)): #checks if move-spot in position to print ()
-          st += ">" + toBoard(i, j)
+          st += "( )"
         else: #otherwise, only prints []
           st += board[i][j]
     
