@@ -214,10 +214,69 @@ def movePieceTo(piece, x, y):
   #for the piece to add and replace the pawn
   #for white piece
   if (piece.__class__ == pawn) and (piece.team == "w") and (piece.x == 0):
-    print("w to replace")
+    replacePawn(piece, x, y)
   #for black piece
   if (piece.__class__ == pawn) and (piece.team == "b") and (piece.x == 7):
-    print("B to replace")
+    replacePawn(piece, x, y)
+
+#------------------------------------------------------
+#when pawn reaches the other edge, asks the user with
+#which piece wants to replace the pawn
+def replacePawn(pawn, x, y):
+  print("")
+  print("Choose one piece (number) to replace your pawn:")
+  print("1. Queen")
+  print("2. King")
+  print("3. Bishop")
+  print("4. Knight")
+  print("5. Rook")
+  print("6. Pawn")
+
+  #read the input, dont accept strings
+  while True:  
+    while True:
+      try:
+        choice = int(input())
+        break
+      except:
+        print("Insert a number")
+
+    #makes sure the num is on range of options
+    if 1 <= int(choice) <= 5:
+      choice = int(choice)
+      
+      #create the new piece
+      if choice == 1:
+        pawn.kill()
+        addedQueen = queen(x, y, pawn.team, swq)
+        all_pieces.append(addedQueen)
+        print("Pawn replaced by a Queen")
+      elif choice == 2:
+        pawn.kill()
+        addedKing = king(x, y, pawn.team, swq)
+        all_pieces.append(addedKing)
+        print("Pawn replaced by a King")
+      elif choice == 3:
+        pawn.kill()
+        addedBishop = bishop(x, y, pawn.team, swq)
+        all_pieces.append(addedBishop)
+        print("Pawn replaced by a Bishop")
+      elif choice == 4:
+        pawn.kill()
+        addedKnight = knight(x, y, pawn.team, swq)
+        all_pieces.append(addedKnight)
+        print("Pawn replaced by a Knight")
+      elif choice == 5:
+        pawn.kill()
+        addedRook = rook(x, y, pawn.team, swq)
+        all_pieces.append(addedRook)
+        print("Pawn replaced by a Rook")
+
+      break
+    else:
+      print("Invalid input, please try again")
+
+
 
 #------------------------------------------------------
 #returns [x][y] position on board style [ch][#]
