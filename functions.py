@@ -210,6 +210,15 @@ def movePieceTo(piece, x, y):
     else:
       print("Spot occupied by your chessman")
 
+  #check if pawn is on the other side to ask
+  #for the piece to add and replace the pawn
+  #for white piece
+  if (piece.__class__ == pawn) and (piece.team == "w") and (piece.x == 0):
+    print("w to replace")
+  #for black piece
+  if (piece.__class__ == pawn) and (piece.team == "b") and (piece.x == 7):
+    print("B to replace")
+
 #------------------------------------------------------
 #returns [x][y] position on board style [ch][#]
 def toBoard(x, y):
