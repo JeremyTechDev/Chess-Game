@@ -403,6 +403,7 @@ def ifCheck(king, team, oppositeTeam):
 def getKingsAttackers(king, oppositeTeam):
   kingsAttackers = [] #return item
   posKing = [king.x, king.y]
+  allKingMoves = getKingMoves(king, king.x, king.y)
 
   #get the team's pieces
   if oppositeTeam == "w":
@@ -413,10 +414,36 @@ def getKingsAttackers(king, oppositeTeam):
   for piece in teamList:
     moves = getMoveFunction(piece)(piece, piece.x, piece.y)
     for move in moves:
-      if move == posKing:
+      if move in allKingMoves or move == posKing:
         kingsAttackers.append(piece)
   
   return kingsAttackers
+
+#Return all moves of the king's attackers
+def getKingsAttackersMoves(kingsAttackers):
+  result = [] #return item
+
+  for piece in kingsAttackers:
+    moves = getMoveFunction(piece)(piece, piece.x, piece.y)
+    for move in moves:
+      if move not in result:
+        result.append(move)
+  
+  return result
+
+#-------------------------------------------------------
+#shows all the pieces that can move to protect the king
+def protectKing(king, oppositeTeam):
+  #get moves to where king must not move
+  dangerousSpots = getKingsAttackersMoves(getKingsAttackers(king, oppositeTeam))
+  
+  #first, get king's moves
+  kingMoves = getKingMoves(king, king.x, king.y)
+  for kingM in kingMoves:
+    if kingM not in dangerousSpots:
+      print(toBoard(kingM[0], kingM[1]))
+
+
 
 """
             GETTERS OF PIECE MOVES
