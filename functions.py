@@ -397,6 +397,27 @@ def ifCheck(king, team, oppositeTeam):
   else:
     return False
 
+#----------------------------------------------------
+#return all the attacker of the king, all the pieces
+#that can kill the king on the next move
+def getKingsAttackers(king, oppositeTeam):
+  kingsAttackers = [] #return item
+  posKing = [king.x, king.y]
+
+  #get the team's pieces
+  if oppositeTeam == "w":
+    teamList = all_white_pieces
+  else:
+    teamList = all_black_pieces
+
+  for piece in teamList:
+    moves = getMoveFunction(piece)(piece, piece.x, piece.y)
+    for move in moves:
+      if move == posKing:
+        kingsAttackers.append(piece)
+  
+  return kingsAttackers
+
 """
             GETTERS OF PIECE MOVES
     returns a list if ALL the moves a piece can make
