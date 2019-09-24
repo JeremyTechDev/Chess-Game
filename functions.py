@@ -368,19 +368,34 @@ def toSys(pos):
 def getTeamMoves(team):
   result = [] #return item
 
+  #get the team's pieces
   if team == "w":
-    for piece in all_white_pieces:
+    teamList = all_white_pieces
+  else:
+    teamList = all_black_pieces
+
+  for piece in teamList:
+    moves = getMoveFunction(piece)(piece, piece.x, piece.y)
+    for move in moves:
+      if move not in result:
+        result.append(move)
+  
+  return result
 
 #-----------------------------------------------------
 #Returns True is the king of the given team is on check
 #Otherwise, returns False
-def isCheck(king, team):
+def ifCheck(king, team, oppositeTeam):
   #get kings postiion [x][y]
-  x = king.X
-  y = king.Y
-  posKing = [x, y]
+  posKing = [king.x, king.y]
 
   #get all rival possible moves
+  rivalMoves = getTeamMoves(oppositeTeam)
+
+  if posKing in rivalMoves:
+    return True
+  else:
+    return False
 
 """
             GETTERS OF PIECE MOVES
