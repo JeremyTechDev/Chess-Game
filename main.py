@@ -150,5 +150,6 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-movePieceTo(wp1, 2,0)
-startGame()
+#movePieceTo(wp1, 2,0)
+#startGame()
+getTeamMoves("w")

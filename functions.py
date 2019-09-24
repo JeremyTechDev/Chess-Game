@@ -139,6 +139,8 @@ bb2 = bishop(0,5,"b")
 bki = king(0,3,"b")
 bqu = queen(0,4,"b")
 
+all_white_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu]
+all_black_pieces = [bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 
 
@@ -313,6 +315,23 @@ def replacePawn(pawn, x, y):
     else:
       print("Invalid input, please try again")
 
+#--------------------------------------------------------
+#return the getMoves funtions that must be used
+#depending on the piece chosen by the user
+def getMoveFunction(piece):
+  if piece.__class__ == pawn:
+    return getPawnMoves
+  elif piece.__class__ == rook:
+    return getRookMoves
+  elif piece.__class__ == knight:
+    return getKnightMoves
+  elif piece.__class__ == bishop:
+    return getBishopMoves
+  elif piece.__class__ == king:
+    return getKingMoves
+  elif piece.__class__ == queen:
+    return getQueenMoves
+
 """
   POSITION TRANSLATE FUNCTIONS
 """
@@ -344,7 +363,24 @@ def toSys(pos):
 """
   END GAME FUNTIONS
 """
+#-----------------------------------------------------
+#return a team's all possible moves
+def getTeamMoves(team):
+  result = [] #return item
 
+  if team == "w":
+    for piece in all_white_pieces:
+
+#-----------------------------------------------------
+#Returns True is the king of the given team is on check
+#Otherwise, returns False
+def isCheck(king, team):
+  #get kings postiion [x][y]
+  x = king.X
+  y = king.Y
+  posKing = [x, y]
+
+  #get all rival possible moves
 
 """
             GETTERS OF PIECE MOVES
