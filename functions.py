@@ -313,8 +313,9 @@ def replacePawn(pawn, x, y):
     else:
       print("Invalid input, please try again")
 
-
-
+"""
+  POSITION TRANSLATE FUNCTIONS
+"""
 #------------------------------------------------------
 #returns [x][y] position on board style [ch][#]
 def toBoard(x, y):
@@ -340,6 +341,10 @@ def toSys(pos):
   if (let in listY) and 1 <= int(num) <= 8:
     return listX.index(int(num)), listY.index(let)
 
+"""
+  END GAME FUNTIONS
+"""
+
 
 """
             GETTERS OF PIECE MOVES
@@ -348,7 +353,6 @@ def toSys(pos):
     needs the position of the piece [x][y] and the piece
     [a][b] == [x][y] used not to change any data
 """
-
 #------------------------------------------------------
 #Discards all imposible moves for any piece
 def discardImMoves(piece, moves):
