@@ -9,67 +9,76 @@ from functions import *
 def runTurn(team):
   #checks that the user's choice is ok and that there are moves for that piece
   while True:
+    print("")
     print("Insert the position of the piece to move:")
     piecePosition = input()
-    if toSys(piecePosition):
-      #the position in this variable is ok
-      piecePosition = toSys(piecePosition)
 
-      #check that there are possible moves,
-      #otherwive, asks again for position
-      if validateForPiece(piecePosition, team):
-        #set piece position [x][y]
-        x = piecePosition[0]
-        y = piecePosition[1]
-        #get the specific piece
-        piece = getPieceAtPosition(x, y)
-        #find all moves for the piece after finding the piece type with getMoveFunction(piece)
-        allPossibleMoves = getMoveFunction(piece)(piece, x, y)
+    #make sure input is not only one character or digit
+    if len(piecePosition) == 0 or len(piecePosition) == 1:
+      print("The input should be one letter and one digit, try again")
+    else:
+      if toSys(piecePosition):
+        #the position in this variable is ok
+        piecePosition = toSys(piecePosition)
 
-        if len(allPossibleMoves) == 0:
-          print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
-        else:
-          #prints the board showing the possible moves of the piece chosen as ( )
-          printBoard(allPossibleMoves)
+        #check that there are possible moves,
+        #otherwive, asks again for position
+        if validateForPiece(piecePosition, team):
+          #set piece position [x][y]
+          x = piecePosition[0]
+          y = piecePosition[1]
+          #get the specific piece
+          piece = getPieceAtPosition(x, y)
+          #find all moves for the piece after finding the piece type with getMoveFunction(piece)
+          allPossibleMoves = getMoveFunction(piece)(piece, x, y)
 
-          #shows choices for the move of the piece
-          print("Chose your next move for the " + chessman_names[piece.chessman] +":")
-          for move in allPossibleMoves:
-            posX = move[0]
-            posY = move[1]
-            print(">>> " + toBoard(posX, posY))
-          #shows a option in case user what to change piece
-          print("")
-          print('Insert "0" if you want to chose another piece')
-          
-          #read the position to
-          while True:
-            positionTo = input()
+          if len(allPossibleMoves) == 0:
+            print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
+          else:
+            #prints the board showing the possible moves of the piece chosen as ( )
+            printBoard(allPossibleMoves)
 
-            if positionTo == "0":
-              printBoard(None)
-              runTurn(team)
-              break
-
-            if toSys(positionTo):
-              positionTo = toSys(positionTo)
-
-              if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                movePieceTo(piece, positionTo[0], positionTo[1])
-                break
+            #shows choices for the move of the piece
+            print("Chose your next move for the " + chessman_names[piece.chessman] +":")
+            for move in allPossibleMoves:
+              posX = move[0]
+              posY = move[1]
+              print(">>> " + toBoard(posX, posY))
+            #shows a option in case user what to change piece
+            print("")
+            print('Insert "0" if you want to chose another piece')
+            
+            #read the position to
+            while True:
+              positionTo = input()
+              #make sure input is not only one character or digit
+              if len(positionTo) == 0 or len(positionTo) == 1:
+                print("The input should be one letter and one digit, try again")
               else:
-                print("That move is not possible, check the list and try again")
+                if positionTo == "0":
+                  printBoard(None)
+                  runTurn(team)
+                  break
 
-            else:
-              print("Invaid position, try another one")
+                if toSys(positionTo):
+                  positionTo = toSys(positionTo)
 
-          break #finishes the while with all success by the user
+                  if [positionTo[0], positionTo[1]] in allPossibleMoves:
+                    movePieceTo(piece, positionTo[0], positionTo[1])
+                    break
+                  else:
+                    print("That move is not possible, check the list and try again")
+
+                else:
+                  print("Invaid position, try another one")
+
+            break #finishes the while with all success by the user
+
+        else:
+          print("Empty spot, try another one")
 
       else:
-        print("Empty spot, try another one")
-
-    else:
-      print("Invaid position, try another one")
+        print("Invaid position, try another one")
 
 #--------------------------------------------------------
 #return the getMoves funtions that must be used
