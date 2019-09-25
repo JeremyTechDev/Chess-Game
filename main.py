@@ -80,23 +80,6 @@ def runTurn(team):
       else:
         print("Invaid position, try another one")
 
-#--------------------------------------------------------
-#return the getMoves funtions that must be used
-#depending on the piece chosen by the user
-def getMoveFunction(piece):
-  if piece.__class__ == pawn:
-    return getPawnMoves
-  elif piece.__class__ == rook:
-    return getRookMoves
-  elif piece.__class__ == knight:
-    return getKnightMoves
-  elif piece.__class__ == bishop:
-    return getBishopMoves
-  elif piece.__class__ == king:
-    return getKingMoves
-  elif piece.__class__ == queen:
-    return getQueenMoves
-
 #--------------------------------------------------------------
 #return True if the choosen piece to move is able to move
 #takes in consideration if there is a piece is that pos and
@@ -126,19 +109,32 @@ prints the last move of the game.
 >3. User chose one move the his or her turn is over
 >4. The same with the next player
 """
+#runs while the game is not over
 def startGame():
-  #runs while the game is not over
-  gameOver = False
-  while not gameOver:
+  lastTurn = "b"
+  while True:
+    if lastTurn == "b":
+      lastTurn = "w" 
+      opTeam = "b" #oppsite team
+      teamKing = wki
+      teamName = "WHITE"
+    else:
+      lastTurn = "b"
+      opTeam = "w" #oppsite team
+      teamKing = bki
+      teamName = "BLACK"
     
-    printBoard(None)
-    print(">>> WHITE'S TURN")
-    runTurn("w")
-
-    printBoard(None)
-    print(">>> BLACK'S TURN")
-    runTurn("b")
-    #gameOver = True
+    printBoard(None) #prints actual state of the board
+    #if king is on check, player must protect it
+    if isOnCheck(teamKing, lastTurn, opTeam):
+      print(teamName + " KING IS ON CHECK, PROTECT IT")
+      
+      a = protectKing(teamKing, opTeam)
+      for i in a:
+        print(toBoard(i[0], i[1]))
+    else:
+      print(">>>" + teamName + "'S TURN")
+      runTurn(lastTurn)
 
 """
 printBoard(None)
@@ -150,6 +146,9 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-#movePieceTo(wp1, 2,0)
-#startGame()
-getTeamMoves("w")
+movePieceTo(bki, 5, 2)
+startGame()
+#movePieceTo(bki, 5, 2)
+#printBoard(None)
+#print(ifCheck(bki, "b", "w"))
+#protectKing(bki, "w")
