@@ -128,8 +128,9 @@ def startGame():
     #if king is on check, player must protect it
     if isOnCheck(teamKing, lastTurn, opTeam):
       print(teamName + " KING IS ON CHECK, PROTECT IT")
-      
+
       a = protectKing(teamKing, opTeam)
+      print("possible moves:")
       for i in a:
         print(toBoard(i[0], i[1]))
     else:
@@ -146,7 +147,8 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-movePieceTo(bki, 5, 2)
+movePieceTo(bki, 4, 2)
+#printBoard(None)
 startGame()
 #movePieceTo(bki, 5, 2)
 #printBoard(None)

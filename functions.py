@@ -378,13 +378,15 @@ def getTeamMoves(team):
     teamList = all_black_pieces
 
   for piece in teamList:
+    #ignore pawn up and down moves
     if piece.__class__ != pawn:
       moves = getMoveFunction(piece)(piece, piece.x, piece.y)
-    else:
+    else: #consider pawns kill moves
       moves = getKillerPawnMoves(piece, piece.x, piece.y) 
 
     for move in moves:
-      if move not in result:
+      #check if move is not repeated and piece is not temporaly there
+      if move not in result and checkForPiece(piece.x, piece.y):
         result.append(move)
   
   return result
@@ -749,7 +751,7 @@ def getKillerPawnMoves(pawn, x, y):
   moves = [] #the return item
   a = x
   b = y
-
+  #if it is up or down move
   if pawn.team == "w":
     a -= 1
   else: 
@@ -766,4 +768,5 @@ def getKillerPawnMoves(pawn, x, y):
     if (getPieceAtPosition(possEat2[0], possEat2[1]).team != pawn.team):
       moves.append(possEat2)
 
+  #print(discardImMoves(pawn, moves))
   return discardImMoves(pawn, moves) 
