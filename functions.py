@@ -385,12 +385,33 @@ def getTeamMoves(team):
 #-----------------------------------------------------
 #Returns True is the king of the given team is on check
 #Otherwise, returns False
-def ifCheck(king, team, oppositeTeam):
+def isOnCheck(king, team, oppositeTeam):
   #get kings postiion [x][y]
   posKing = [king.x, king.y]
 
+  #if there is a piece different that the king in that position,
+  #temporaly move it to out of the board because it is virtualy killed
+  tPiece = None
+  actTX = None
+  actTY = None
+  for piece in all_pieces:
+    piecePos = [piece.x, piece.y]
+    if piecePos == posKing:
+      print(piece.chessman)
+      tPiece = piece
+      actTX = piece.x
+      actTY = piece.y
+      #move piece to temporal new position
+      piece.moveTo(9, 9)
+      break
+
+
   #get all rival possible moves
   rivalMoves = getTeamMoves(oppositeTeam)
+
+  #get piece back to its position
+  if tPiece != None:
+    tPiece.moveTo(actTX, actTY)
 
   if posKing in rivalMoves:
     return True
@@ -398,8 +419,8 @@ def ifCheck(king, team, oppositeTeam):
     return False
 
 #----------------------------------------------------
-#return all the attacker of the king, all the pieces
-#that can kill the king on the next move
+#return all the attacker of the king at position [x][y],
+#all the pieces that can kill the king on the next move
 def getKingsAttackers(king, oppositeTeam):
   kingsAttackers = [] #return item
   posKing = [king.x, king.y]
@@ -434,14 +455,37 @@ def getKingsAttackersMoves(kingsAttackers):
 #-------------------------------------------------------
 #shows all the pieces that can move to protect the king
 def protectKing(king, oppositeTeam):
+  savingKingMoves = [] #return item
+
   #get moves to where king must not move
-  dangerousSpots = getKingsAttackersMoves(getKingsAttackers(king, oppositeTeam))
-  
-  #first, get king's moves
+  dangerousSpots = getTeamMoves(oppositeTeam)
+  #get king's moves
   kingMoves = getKingMoves(king, king.x, king.y)
+  """
+  #add savingMoves with the actual king's position
   for kingM in kingMoves:
-    if kingM not in dangerousSpots:
-      print(toBoard(kingM[0], kingM[1]))
+    if kingM in dangerousSpots:
+      kingMoves.remove(kingM)
+  """
+  #save king's actual positions to return to it later
+  actKingX = king.x
+  actKingY = king.y
+
+  #consider moves in the king's next position
+  #given by the kingMoves
+  for kingM in kingMoves:
+    possX = kingM[0] #possible next X
+    possY = kingM[1] #possible next Y
+    #move the king to the possible next move
+    king.moveTo(possX, possY)
+    #if king is on check in that position, in not savingMove
+    if not isOnCheck(king, king.team, oppositeTeam):
+      savingKingMoves.append([king.x, king.y])
+  
+  #return king to its original possition
+  king.moveTo(actKingX, actKingY)
+
+  return savingKingMoves
 
 
 
