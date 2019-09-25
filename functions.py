@@ -42,7 +42,7 @@ class pawn(Piece):
       chessman = sbp
 
     Piece.__init__(self, x, y, team, chessman)
-    self.firstMove = True 
+    self.userMoves = 0 
 
 class rook(Piece):   
   def __init__(self, x, y, team):
@@ -248,6 +248,9 @@ def movePieceTo(piece, x, y):
     else:
       print("Spot occupied by your chessman")
 
+  if piece.__class__ == pawn:
+    piece.userMoves += 1
+
   #check if pawn is on the other side to ask
   #for the piece to add and replace the pawn
   #for white piece
@@ -364,7 +367,7 @@ def toSys(pos):
   END GAME FUNTIONS
 """
 #-----------------------------------------------------
-#return a team's all possible moves
+#return a team's all possible moves, ignoring the pawns
 def getTeamMoves(team):
   result = [] #return item
 
@@ -375,7 +378,11 @@ def getTeamMoves(team):
     teamList = all_black_pieces
 
   for piece in teamList:
-    moves = getMoveFunction(piece)(piece, piece.x, piece.y)
+    if piece.__class__ != pawn:
+      moves = getMoveFunction(piece)(piece, piece.x, piece.y)
+    else:
+      moves = getKillerPawnMoves(piece, piece.x, piece.y) 
+
     for move in moves:
       if move not in result:
         result.append(move)
@@ -396,15 +403,13 @@ def isOnCheck(king, team, oppositeTeam):
   actTY = None
   for piece in all_pieces:
     piecePos = [piece.x, piece.y]
-    if piecePos == posKing:
-      print(piece.chessman)
+    if piecePos == posKing and piece != king:
       tPiece = piece
       actTX = piece.x
       actTY = piece.y
       #move piece to temporal new position
       piece.moveTo(9, 9)
       break
-
 
   #get all rival possible moves
   rivalMoves = getTeamMoves(oppositeTeam)
@@ -457,16 +462,9 @@ def getKingsAttackersMoves(kingsAttackers):
 def protectKing(king, oppositeTeam):
   savingKingMoves = [] #return item
 
-  #get moves to where king must not move
-  dangerousSpots = getTeamMoves(oppositeTeam)
   #get king's moves
   kingMoves = getKingMoves(king, king.x, king.y)
-  """
-  #add savingMoves with the actual king's position
-  for kingM in kingMoves:
-    if kingM in dangerousSpots:
-      kingMoves.remove(kingM)
-  """
+
   #save king's actual positions to return to it later
   actKingX = king.x
   actKingY = king.y
@@ -486,8 +484,6 @@ def protectKing(king, oppositeTeam):
   king.moveTo(actKingX, actKingY)
 
   return savingKingMoves
-
-
 
 """
             GETTERS OF PIECE MOVES
@@ -541,7 +537,7 @@ def getPawnMoves(pawn, x, y):
     if not checkForPiece(a, b): #if front is empty
       moves.append([a, b]) #one step up
 
-      if (pawn.firstMove == True and not checkForPiece(a-1, b)):
+      if (pawn.userMoves == 0 and not checkForPiece(a-1, b)):
         pawn.firstMove = False
         moves.append([a-1,b]) #two steps up
   else:
@@ -549,7 +545,7 @@ def getPawnMoves(pawn, x, y):
     if not checkForPiece(a, b): #if front is empty
       moves.append([a, b]) #one step down
 
-      if (pawn.firstMove == True and not checkForPiece(a+1, b)):
+      if (pawn.userMoves == 0 and not checkForPiece(a+1, b)):
         pawn.firstMove = False
         moves.append([a+1,b])  #two step down
   
@@ -746,3 +742,28 @@ def getQueenMoves(queen, x, y):
       moves.append(move)
 
   return discardImMoves(queen, moves)
+
+#----------------------------------------------------
+#Returns ALL the killer pawn moves
+def getKillerPawnMoves(pawn, x, y):
+  moves = [] #the return item
+  a = x
+  b = y
+
+  if pawn.team == "w":
+    a -= 1
+  else: 
+    a += 1
+
+  #check if piece can eat an other
+  possEat1 = [a,b-1] #possible Eat 1
+  possEat2 = [a,b+1] #possible Eat 1
+  if (checkForPiece(possEat1[0], possEat1[1]) == True): #if there is a piece
+    if (getPieceAtPosition(possEat1[0], possEat1[1]).team != pawn.team): 
+      moves.append(possEat1) #if is different team, add move
+  #same with second piece
+  if (checkForPiece(possEat2[0], possEat2[1]) == True):
+    if (getPieceAtPosition(possEat2[0], possEat2[1]).team != pawn.team):
+      moves.append(possEat2)
+
+  return discardImMoves(pawn, moves) 
