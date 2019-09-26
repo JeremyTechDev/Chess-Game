@@ -135,6 +135,7 @@ def validateForPiece(piecePosition, team):
   
 #----------------------------------
 #get the name of the players
+#avoids blank space inputs
 def getPlayers():
   print("Insert a nickname for the WHITES PLAYER:")
   while True:
@@ -153,6 +154,36 @@ def getPlayers():
       print("Please, insert a valid name")
     
   return wPlayer, bPlayer
+
+#-----------------------------------
+#print how to play messages
+def howToPlay():
+  print(">>> HOW TO PLAY")
+  print("This is how the board looks like:")
+  printBoard(None)
+
+  print("> This is the chess board, the black pieces are shown")
+  print("  at the top and the white pieces, at the bottom.")
+  print("")
+  print("> Also, you have a legend of the pieces at the right")
+  print("")
+  print("> To play, the player on turn will have to choose the")
+  print("  piece he or she wants to move by typing its cords.")
+  print("> The cords are given by a letter and a number that are")
+  print("  both at the left and bottom of the board. Ex: G3")
+  print("")
+  print("> Then, the possible moves for the chosen piece will be")
+  print("  displayed. You only have to choose one of the shown cord")
+  print("  the same way as before. Then your turn is over and your")
+  print("  rival will play")
+  print("")
+  print("> Now you guys are all good to start playing!")
+  print("")
+  print(">>> Press any key to go back to the main menu")
+  input()
+  print("")
+  displayMenu()
+
 """
 RUNS BY CYCLES
 >Each cycle is when both White and Black make a move.
@@ -198,9 +229,10 @@ def startGame(wPlayer, bPlayer):
         print("              GAME OVER   ")
         print("       " + opTeamName + "S ARE THE WINNERS")
         print("     CHECK MAKE ON " + teamName + "'S KING")
+        print("")
         print("Congratulations, " + opPlayer + "!")
         print("+++++++++++++++++++++++++++++++++++++")
-        break
+        exit() #ends program
       else:
         print(teamName + " KING IS ON CHECK, PROTECT IT")
         #run protect king to take him out of the check position
@@ -212,32 +244,38 @@ def startGame(wPlayer, bPlayer):
 #---------------------------------------------
 #           START OF THE PROGRAM
 #---------------------------------------------
-print("++++++++++++++++++++++++++++++++++++")
-print("             CHESS GAME")
-print("")
-print("           1. Start Game")
-print("           2. How to Play")
-print("")
-print("              3. Exit")
-print("++++++++++++++++++++++++++++++++++++")
-print("Choose an option:")
+def displayMenu():
+  print("++++++++++++++++++++++++++++++++++++")
+  print("             CHESS GAME")
+  print("")
+  print("           1. Start Game")
+  print("           2. How to Play")
+  print("")
+  print("              3. Exit")
+  print("++++++++++++++++++++++++++++++++++++")
+  print("Choose an option:")
 
-while True:
-  choice = input()
-  if choice != "" and int(choice):
-    choice = int(choice)
-    if choice == 1:
-      players = getPlayers()
-      print("")
-      print(">>> GAME STARTED!")
-      print("Good luck, " + players[0] + " and " + players[1] + "!")
-      startGame(players[0], players[1])
-    elif choice == 2:
-      pass
-    elif choice == 3:
-      print(">>> THANKS FOR PLAYING, COME BACK SOON!")
-      break
+  while True:
+    choice = input()
+
+    if choice != "" and int(choice):
+      choice = int(choice)
+      
+      if choice == 1:
+        #get players names
+        players = getPlayers()
+        print("")
+        print(">>> GAME STARTED!")
+        print("Good luck, " + players[0] + " and " + players[1] + "!")
+        startGame(players[0], players[1])
+      elif choice == 2:
+        howToPlay()
+      elif choice == 3:
+        print(">>> THANKS FOR PLAYING, COME BACK SOON!")
+        break
+      else:
+        print("Your choice must be a number between 1 and 3")
     else:
-      print("Your choice must be a number between 1 and 3")
-  else:
-    print("Your choice must be a number [1-3]")
+      print("Your choice must be a number [1-3]")
+
+displayMenu()
