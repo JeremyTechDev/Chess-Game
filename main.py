@@ -112,7 +112,7 @@ prints the last move of the game.
 #runs while the game is not over
 def startGame():
   lastTurn = "b"
-  while True:
+  while True: #set turn info
     if lastTurn == "b":
       lastTurn = "w" 
       opTeam = "b" #oppsite team
@@ -128,11 +128,12 @@ def startGame():
     #if king is on check, player must protect it
     if isOnCheck(teamKing, lastTurn, opTeam):
       print(teamName + " KING IS ON CHECK, PROTECT IT")
-
+      
       a = protectKing(teamKing, opTeam)
       print("possible moves:")
       for i in a:
         print(toBoard(i[0], i[1]))
+      break
     else:
       print(">>>" + teamName + "'S TURN")
       runTurn(lastTurn)
@@ -147,8 +148,8 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-movePieceTo(bki, 4, 2)
-#printBoard(None)
+#movePieceTo(bki, 4, 2)
+printBoard(None)
 startGame()
 #movePieceTo(bki, 5, 2)
 #printBoard(None)

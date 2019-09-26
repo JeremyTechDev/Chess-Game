@@ -587,6 +587,7 @@ def getKnightMoves(knight, x, y):
 #Returns ALL the moves for king
 def getKingMoves(king, x, y):
   moves = [] #the return item
+  toDelete = []
   a = x
   b = y
 
@@ -599,6 +600,42 @@ def getKingMoves(king, x, y):
   moves.append([a+1, b-1])
   moves.append([a, b-1])
   moves.append([a-1, b-1])
+  
+  #discard move is there is check there, to avoid check mate
+  for move in moves:
+    #if piece at move spot, move it kill it temporaly to check check
+    pieceOnSpot = None
+    posX = None
+    posY = None
+    if checkForPiece(move[0], move[1]):
+      pieceOnSpot = getPieceAtPosition(move[0], move[1])
+      #save piece on spot real position
+      posX = pieceOnSpot.x
+      posY = pieceOnSpot.y
+
+      #temporaly move the piece out of board
+      pieceOnSpot.moveTo(9, 9)
+
+    #move king to possible next move to check is chesk mate
+    king.moveTo(move[0], move[1])
+    if king.team == "w":
+      opTeam = "b"
+    else:
+      opTeam = "w"
+    if isOnCheck(king, king.team, opTeam):
+      toDelete.append(move) #to delete later
+
+    #move piece on spot back to real place
+    if pieceOnSpot != None:
+      pieceOnSpot.moveTo(posX, posY)
+  
+    #move king back to its real position
+    king.moveTo(a, b)
+  
+  #delete check mete moves
+  for rem in toDelete:
+    if rem in moves:
+      moves.remove(rem)
 
   return discardImMoves(king, moves)
 
