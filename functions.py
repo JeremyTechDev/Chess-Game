@@ -118,8 +118,8 @@ wk1 = knight(7,1,"w")
 wk2 = knight(7,6,"w")
 wb1 = bishop(7,2,"w")
 wb2 = bishop(7,5,"w")
-wki = king(7,3,"w")
-wqu = queen(7,4,"w")
+wki = king(7,4,"w")
+wqu = queen(7,3,"w")
 
 #BLACKS
 bp1 = pawn(1,0,"b")
@@ -136,8 +136,8 @@ bk1 = knight(0,1,"b")
 bk2 = knight(0,6,"b")
 bb1 = bishop(0,2,"b")
 bb2 = bishop(0,5,"b")
-bki = king(0,3,"b")
-bqu = queen(0,4,"b")
+bki = king(0,4,"b")
+bqu = queen(0,3,"b")
 
 all_white_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu]
 all_black_pieces = [bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
@@ -461,6 +461,7 @@ def getKingsAttackersMoves(kingsAttackers):
 
 #-------------------------------------------------------
 #shows all the pieces that can move to protect the king
+#return a list of moves that can save the king
 def protectKing(king, oppositeTeam):
   savingKingMoves = [] #return item
 

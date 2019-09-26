@@ -85,6 +85,40 @@ def runTurn(team):
         print("Invaid position, try another one")
 
 #--------------------------------------------------------------
+def runProtectKingTurn(king, oppositeTeam):
+  print("Move it to a saving position, shown below:")
+ 
+  #get saving moves:
+  savingMoves = protectKing(king, oppositeTeam)
+
+  #print board showing saving moves
+  printBoard(savingMoves)
+
+  #show moves
+  for move in savingMoves:
+    posX = move[0]
+    posY = move[1]
+    print(">>> " + toBoard(posX, posY))
+  
+  while True:
+    positionTo = input()
+
+    if len(positionTo) == 0 or len(positionTo) == 1:
+      print("The input should be one letter and one digit, try again")
+    else:
+      if toSys(positionTo):
+        positionTo = toSys(positionTo)
+
+        if [positionTo[0], positionTo[1]] in savingMoves:
+          movePieceTo(king, positionTo[0], positionTo[1])
+          break
+        else:
+          print("That move is not possible, check the list and try again")
+
+      else:
+        print("Invaid position, try another one")
+
+#--------------------------------------------------------------
 #return True if the choosen piece to move is able to move
 #takes in consideration if there is a piece is that pos and
 #if the piece is the same team of the player in turn
@@ -122,26 +156,34 @@ def startGame():
       opTeam = "b" #oppsite team
       teamKing = wki
       teamName = "WHITE"
+      opTeamName = "BLACK"
     else:
       lastTurn = "b"
       opTeam = "w" #oppsite team
       teamKing = bki
       teamName = "BLACK"
+      opTeamName = "WHITE"
     
     printBoard(None) #prints actual state of the board
     #if king is on check, player must protect it
-    if isOnCheck(teamKing, lastTurn, opTeam):
-      print(teamName + " KING IS ON CHECK, PROTECT IT")
-      
-      a = protectKing(teamKing, opTeam)
-      print("possible moves:")
-      for i in a:
-        print(toBoard(i[0], i[1]))
-      break
+    if isOnCheck(teamKing, lastTurn, opTeam):      
+      #if there are no saving moves, its a check mate and game is over
+      savingMoves = protectKing(teamKing, opTeam)
+      if len(savingMoves) == 0:
+        print("++++++++++++++++++++++++++++++++++++")
+        print("     GAME OVER   ")
+        print(teamName + "S ARE THE WINNERS")
+        print("CHECK MAKE ON " + opTeamName + "'S KING")
+        print("++++++++++++++++++++++++++++++++++++")
+        break
+      else:
+        print(teamName + " KING IS ON CHECK, PROTECT IT")
+        #run protect king to take him out of the check position
+        runProtectKingTurn(teamKing, opTeam)
     else:
       print(">>>" + teamName + "'S TURN")
       runTurn(lastTurn)
 
-movePieceTo(bki, 4, 2)
+#movePieceTo(bki, 4, 2)
 #printBoard(None)
 startGame()
