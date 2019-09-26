@@ -1,7 +1,7 @@
 from classes import *
 from functions import *
 
-displayMenu() #start od the program
+displayMenu() #start of the program
 
 #FUNCTIONS
 #-------------------------------------------------------
@@ -172,9 +172,9 @@ def howToPlay():
   print("  both at the left and bottom of the board. Ex: G3")
   print("")
   print("> Then, the possible moves for the chosen piece will be")
-  print("  displayed. You only have to choose one of the shown cord")
-  print("  the same way as before. Then your turn is over and your")
-  print("  rival will play")
+  print("  displayed. They are shown by ( ) instead of [ ].")
+  print("> You only have to choose one of the shown cord the same")
+  print("  way as before. Then it's the rival's turn")
   print("")
   print("> Now you guys are all good to start playing!")
   print("")
