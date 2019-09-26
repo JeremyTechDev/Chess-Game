@@ -1,10 +1,9 @@
 from classes import *
 from functions import *
 
-#Main functions of the game
-#whitePieces = 16
-#blackPieces = 16
+displayMenu() #start od the program
 
+#FUNCTIONS
 #-------------------------------------------------------
 def runTurn(team):
   #checks that the user's choice is ok and that there are moves for that piece
@@ -277,5 +276,3 @@ def displayMenu():
         print("Your choice must be a number between 1 and 3")
     else:
       print("Your choice must be a number [1-3]")
-
-displayMenu()

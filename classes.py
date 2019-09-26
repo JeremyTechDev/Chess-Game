@@ -1,5 +1,5 @@
 from symbols import *
-from functions import *
+#from functions import *
 
 """
 PARAMETHERS:
@@ -30,28 +30,64 @@ class Piece():
 
 #CHILD OBJECTS
 class pawn(Piece):
-  def __init__(self, x, y, team, chessman):
-    Piece.__init__(self, x, y, team, chessman)
-    self.firstMove = True 
+  def __init__(self, x, y, team):
+    #get symbol from symbols.py
+    if team == "w":
+      chessman = swp
+    else:
+      chessman = sbp
 
-class rook(Piece):
-  def __init__(self, x, y, team, chessman):
+    Piece.__init__(self, x, y, team, chessman)
+    self.userMoves = 0 
+
+class rook(Piece):   
+  def __init__(self, x, y, team):
+    #get symbol from symbols.py
+    if team == "w":
+      chessman = swr
+    else:
+      chessman = sbr
+
     Piece.__init__(self, x, y, team, chessman) 
 
-class knight(Piece):
-  def __init__(self, x, y, team, chessman):
+class knight(Piece):   
+  def __init__(self, x, y, team):
+    #get symbol from symbols.py
+    if team == "w":
+      chessman = swk
+    else:
+      chessman = sbk
+
     Piece.__init__(self, x, y, team, chessman)
 
-class bishop(Piece):
-  def __init__(self, x, y, team, chessman):
+class bishop(Piece):   
+  def __init__(self, x, y, team):
+    #get symbol from symbols.py
+    if team == "w":
+      chessman = swb
+    else:
+      chessman = sbb
+
     Piece.__init__(self, x, y, team, chessman) 
 
 class king(Piece):
-  def __init__(self, x, y, team, chessman):
+  def __init__(self, x, y, team):
+    #get symbol from symbols.py
+    if team == "w":
+      chessman = swki
+    else:
+      chessman = sbki
+
     Piece.__init__(self, x, y, team, chessman) 
 
-class queen(Piece):
-  def __init__(self, x, y, team, chessman):
+class queen(Piece):  
+  def __init__(self, x, y, team):
+    #get symbol from symbols.py
+    if team == "w":
+      chessman = swq
+    else:
+      chessman = sbq
+    
     Piece.__init__(self, x, y, team, chessman) 
 
 """
@@ -64,39 +100,42 @@ Position [7][7] is the bottom right spot
 """
 
 #WHITES
-wp1 = pawn(6,0,"w", swp)
-wp2 = pawn(6,1,"w", swp)
-wp3 = pawn(6,2,"w", swp)
-wp4 = pawn(6,3,"w", swp)
-wp5 = pawn(6,4,"w", swp)
-wp6 = pawn(6,5,"w", swp)
-wp7 = pawn(6,6,"w", swp)
-wp8 = pawn(6,7,"w", swp)
-wr1 = rook(7,0,"w", swr)
-wr2 = rook(7,7,"w", swr)
-wk1 = knight(7,1,"w", swk)
-wk2 = knight(7,6,"w", swk)
-wb1 = bishop(7,2,"w", swb)
-wb2 = bishop(7,5,"w", swb)
-wki = king(7,3,"w", swki)
-wqu = queen(7,4,"w", swq)
+wp1 = pawn(6,0,"w")
+wp2 = pawn(6,1,"w")
+wp3 = pawn(6,2,"w")
+wp4 = pawn(6,3,"w")
+wp5 = pawn(6,4,"w")
+wp6 = pawn(6,5,"w")
+wp7 = pawn(6,6,"w")
+wp8 = pawn(6,7,"w")
+wr1 = rook(7,0,"w")
+wr2 = rook(7,7,"w")
+wk1 = knight(7,1,"w")
+wk2 = knight(7,6,"w")
+wb1 = bishop(7,2,"w")
+wb2 = bishop(7,5,"w")
+wki = king(7,4,"w")
+wqu = queen(7,3,"w")
 
 #BLACKS
-bp1 = pawn(1,0,"b", sbp)
-bp2 = pawn(1,1,"b", sbp)
-bp3 = pawn(1,2,"b", sbp)
-bp4 = pawn(1,3,"b", sbp)
-bp5 = pawn(1,4,"b", sbp)
-bp6 = pawn(1,5,"b", sbp)
-bp7 = pawn(1,6,"b", sbp)
-bp8 = pawn(1,7,"b", sbp)
-br1 = rook(0,0,"b", sbr)
-br2 = rook(0,7,"b", sbr)
-bk1 = knight(0,1,"b", sbk)
-bk2 = knight(0,6,"b", sbk)
-bb1 = bishop(0,2,"b", sbb)
-bb2 = bishop(0,5,"b", sbb)
-bki = king(0,3,"b", sbki)
-bqu = queen(0,4,"b", sbq)
+bp1 = pawn(1,0,"b")
+bp2 = pawn(1,1,"b")
+bp3 = pawn(1,2,"b")
+bp4 = pawn(1,3,"b")
+bp5 = pawn(1,4,"b")
+bp6 = pawn(1,5,"b")
+bp7 = pawn(1,6,"b")
+bp8 = pawn(1,7,"b")
+br1 = rook(0,0,"b")
+br2 = rook(0,7,"b")
+bk1 = knight(0,1,"b")
+bk2 = knight(0,6,"b")
+bb1 = bishop(0,2,"b")
+bb2 = bishop(0,5,"b")
+bki = king(0,4,"b")
+bqu = queen(0,3,"b")
 
+all_white_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu]
+all_black_pieces = [bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
+
