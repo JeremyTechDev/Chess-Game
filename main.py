@@ -133,7 +133,26 @@ def validateForPiece(piecePosition, team):
 
   return True
   
+#----------------------------------
+#get the name of the players
+def getPlayers():
+  print("Insert a nickname for the WHITES PLAYER:")
+  while True:
+    wPlayer = input()
+    if wPlayer != "" and wPlayer != " ":
+      break
+    else:
+      print("Please, insert a valid name")
 
+  print("Insert a nickname for the BLACKS PLAYER:")
+  while True:
+    bPlayer = input()
+    if bPlayer != "" and bPlayer != " ":
+      break
+    else:
+      print("Please, insert a valid name")
+    
+  return wPlayer, bPlayer
 """
 RUNS BY CYCLES
 >Each cycle is when both White and Black make a move.
@@ -148,19 +167,24 @@ prints the last move of the game.
 >4. The same with the next player
 """
 #runs while the game is not over
-def startGame():
+#parameter are the name of the players
+def startGame(wPlayer, bPlayer):
   lastTurn = "b"
   while True: #set turn info
     if lastTurn == "b":
       lastTurn = "w" 
       opTeam = "b" #oppsite team
       teamKing = wki
+      player = wPlayer
+      opPlayer = bPlayer
       teamName = "WHITE"
       opTeamName = "BLACK"
     else:
       lastTurn = "b"
       opTeam = "w" #oppsite team
       teamKing = bki
+      player = bPlayer
+      opPlayer = wPlayer
       teamName = "BLACK"
       opTeamName = "WHITE"
     
@@ -170,20 +194,50 @@ def startGame():
       #if there are no saving moves, its a check mate and game is over
       savingMoves = protectKing(teamKing, opTeam)
       if len(savingMoves) == 0:
-        print("++++++++++++++++++++++++++++++++++++")
-        print("     GAME OVER   ")
-        print(teamName + "S ARE THE WINNERS")
-        print("CHECK MAKE ON " + opTeamName + "'S KING")
-        print("++++++++++++++++++++++++++++++++++++")
+        print("+++++++++++++++++++++++++++++++++++++")
+        print("              GAME OVER   ")
+        print("       " + opTeamName + "S ARE THE WINNERS")
+        print("     CHECK MAKE ON " + teamName + "'S KING")
+        print("Congratulations, " + opPlayer + "!")
+        print("+++++++++++++++++++++++++++++++++++++")
         break
       else:
         print(teamName + " KING IS ON CHECK, PROTECT IT")
         #run protect king to take him out of the check position
         runProtectKingTurn(teamKing, opTeam)
     else:
-      print(">>>" + teamName + "'S TURN")
+      print(">>> " + teamName + "'S TURN (" + player + ")")
       runTurn(lastTurn)
 
-#movePieceTo(bki, 4, 2)
-#printBoard(None)
-startGame()
+#---------------------------------------------
+#           START OF THE PROGRAM
+#---------------------------------------------
+print("++++++++++++++++++++++++++++++++++++")
+print("             CHESS GAME")
+print("")
+print("           1. Start Game")
+print("           2. How to Play")
+print("")
+print("              3. Exit")
+print("++++++++++++++++++++++++++++++++++++")
+print("Choose an option:")
+
+while True:
+  choice = input()
+  if choice != "" and int(choice):
+    choice = int(choice)
+    if choice == 1:
+      players = getPlayers()
+      print("")
+      print(">>> GAME STARTED!")
+      print("Good luck, " + players[0] + " and " + players[1] + "!")
+      startGame(players[0], players[1])
+    elif choice == 2:
+      pass
+    elif choice == 3:
+      print(">>> THANKS FOR PLAYING, COME BACK SOON!")
+      break
+    else:
+      print("Your choice must be a number between 1 and 3")
+  else:
+    print("Your choice must be a number [1-3]")

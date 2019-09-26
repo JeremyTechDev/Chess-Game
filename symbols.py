@@ -31,7 +31,7 @@ chessman_names = {
 
 #LEGEND
 legend = [
-  "| SYMBOLS",
+  "| SYMBOLS:",
   "| W B",
   "| ♔ ♚ KINGS",
   "| ♕ ♛ QUEENS",
