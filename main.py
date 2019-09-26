@@ -32,6 +32,10 @@ def runTurn(team):
           #find all moves for the piece after finding the piece type with getMoveFunction(piece)
           allPossibleMoves = getMoveFunction(piece)(piece, x, y)
 
+          #if piece is a king, discard check moves
+          if piece.__class__ == king:
+            allPossibleMoves = discardCheckMoves(piece, allPossibleMoves)
+
           if len(allPossibleMoves) == 0:
             print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
           else:
@@ -138,29 +142,6 @@ def startGame():
       print(">>>" + teamName + "'S TURN")
       runTurn(lastTurn)
 
-"""
-printBoard(None)
-movePieceTo(wk1, 3, 2)
-printBoard(None)
-#probitional- to print pieces' moves
-a = (getKnightMoves(wk1, wk1.x, wk1.y))
-printBoard(a)
-for i in a:
-  print(toBoard(i[0],i[1]), end=" - ")
-"""
 movePieceTo(bki, 4, 2)
 #printBoard(None)
-"""
-a=(getKingMoves(bki, bki.x, bki.y))
-for i in a:
-  print(toBoard(i[0], i[1]))
-b=(discardCheckMoves(bki, a))
-print("")
-for i in b:
-  print(toBoard(i[0], i[1]))
-"""
 startGame()
-#movePieceTo(bki, 5, 2)
-#printBoard(None)
-#print(ifCheck(bki, "b", "w"))
-#protectKing(bki, "w")

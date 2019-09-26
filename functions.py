@@ -526,6 +526,53 @@ def discardImMoves(piece, moves):
 
   return finalMoves #returns all posible moves for a piece
 
+#-------------------------------------------------------
+#return a list of the kings moves with no moves that can
+#cause a check mate
+def discardCheckMoves(king, moves):
+  toDelete = [] #add check mate moves here to delete later
+  #save king's real position
+  a = king.x 
+  b = king.y
+
+  #discard move is there is check there, to avoid check mate
+  for move in moves:
+    #if piece at move spot, move it kill it temporaly to check check
+    pieceOnSpot = None
+    posX = None
+    posY = None
+    if checkForPiece(move[0], move[1]):
+      pieceOnSpot = getPieceAtPosition(move[0], move[1])
+      #save piece on spot real position
+      posX = pieceOnSpot.x
+      posY = pieceOnSpot.y
+
+      #temporaly move the piece out of board
+      pieceOnSpot.moveTo(9, 9)
+
+    #move king to possible next move to check is chesk mate
+    king.moveTo(move[0], move[1])
+    if king.team == "w":
+      opTeam = "b"
+    else:
+      opTeam = "w"
+    if isOnCheck(king, king.team, opTeam):
+      toDelete.append(move) #to delete later
+
+    #move piece on spot back to real place
+    if pieceOnSpot != None:
+      pieceOnSpot.moveTo(posX, posY)
+  
+    #move king back to its real position
+    king.moveTo(a, b)
+  
+  #delete check mete moves
+  for rem in toDelete:
+    if rem in moves:
+      moves.remove(rem)
+
+  return moves #king's moves with no check mate moves
+
 #------------------------------------------------------
 #Return ALL the moves for pawns
 def getPawnMoves(pawn, x, y):
@@ -599,9 +646,6 @@ def getKingMoves(king, x, y):
   moves.append([a+1, b-1])
   moves.append([a, b-1])
   moves.append([a-1, b-1])
-
-  #discard check mate moves
-  moves = discardCheckMoves(king, moves)
   
   return discardImMoves(king, moves)
 
@@ -773,50 +817,3 @@ def getKillerPawnMoves(pawn, x, y):
 
   #print(discardImMoves(pawn, moves))
   return discardImMoves(pawn, moves) 
-
-#-------------------------------------------------------
-#return a list of the kings moves with no moves that can
-#cause a check mate
-def discardCheckMoves(king, moves):
-  toDelete = [] #add check mate moves here to delete later
-  #save king's real position
-  a = king.x 
-  b = king.y
-
-  #discard move is there is check there, to avoid check mate
-  for move in moves:
-    #if piece at move spot, move it kill it temporaly to check check
-    pieceOnSpot = None
-    posX = None
-    posY = None
-    if checkForPiece(move[0], move[1]):
-      pieceOnSpot = getPieceAtPosition(move[0], move[1])
-      #save piece on spot real position
-      posX = pieceOnSpot.x
-      posY = pieceOnSpot.y
-
-      #temporaly move the piece out of board
-      pieceOnSpot.moveTo(9, 9)
-
-    #move king to possible next move to check is chesk mate
-    king.moveTo(move[0], move[1])
-    if king.team == "w":
-      opTeam = "b"
-    else:
-      opTeam = "w"
-    if isOnCheck(king, king.team, opTeam):
-      toDelete.append(move) #to delete later
-
-    #move piece on spot back to real place
-    if pieceOnSpot != None:
-      pieceOnSpot.moveTo(posX, posY)
-  
-    #move king back to its real position
-    king.moveTo(a, b)
-  
-  #delete check mete moves
-  for rem in toDelete:
-    if rem in moves:
-      moves.remove(rem)
-
-  return moves #king's moves with no check mate moves
