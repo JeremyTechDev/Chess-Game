@@ -148,8 +148,17 @@ printBoard(a)
 for i in a:
   print(toBoard(i[0],i[1]), end=" - ")
 """
-#movePieceTo(bki, 4, 2)
-printBoard(None)
+movePieceTo(bki, 4, 2)
+#printBoard(None)
+"""
+a=(getKingMoves(bki, bki.x, bki.y))
+for i in a:
+  print(toBoard(i[0], i[1]))
+b=(discardCheckMoves(bki, a))
+print("")
+for i in b:
+  print(toBoard(i[0], i[1]))
+"""
 startGame()
 #movePieceTo(bki, 5, 2)
 #printBoard(None)
