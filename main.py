@@ -14,73 +14,79 @@ def runTurn(team):
     if len(piecePosition) == 0 or len(piecePosition) == 1:
       print("The input should be one letter and one digit, try again")
     else:
-      if toSys(piecePosition, False):
-        #the position in this variable is ok
-        piecePosition = toSys(piecePosition, True)
+      if isValidPos(piecePosition):
+        if toSys(piecePosition, False):
+          #the position in this variable is ok
+          piecePosition = toSys(piecePosition, True)
 
-        #check that there are possible moves,
-        #otherwive, asks again for position
-        if validateForPiece(piecePosition, team):
-          #set piece position [x][y]
-          x = piecePosition[0]
-          y = piecePosition[1]
-          #get the specific piece
-          piece = getPieceAtPosition(x, y)
-          #find all moves for the piece after finding the piece type with getMoveFunction(piece)
-          allPossibleMoves = getMoveFunction(piece)(piece, x, y)
+          #check that there are possible moves,
+          #otherwive, asks again for position
+          if validateForPiece(piecePosition, team):
+            #set piece position [x][y]
+            x = piecePosition[0]
+            y = piecePosition[1]
+            #get the specific piece
+            piece = getPieceAtPosition(x, y)
+            #find all moves for the piece after finding the piece type with getMoveFunction(piece)
+            allPossibleMoves = getMoveFunction(piece)(piece, x, y)
 
-          #if piece is a king, discard check moves
-          if piece.__class__ == king:
-            allPossibleMoves = discardCheckMoves(piece, allPossibleMoves)
+            #if piece is a king, discard check moves
+            if piece.__class__ == king:
+              allPossibleMoves = discardCheckMoves(piece, allPossibleMoves)
 
-          if len(allPossibleMoves) == 0:
-            print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
-          else:
-            #prints the board showing the possible moves of the piece chosen as ( )
-            printBoard(allPossibleMoves)
+            if len(allPossibleMoves) == 0:
+              print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
+            else:
+              #prints the board showing the possible moves of the piece chosen as ( )
+              printBoard(allPossibleMoves)
 
-            #shows choices for the move of the piece
-            print("Chose your next move for the " + chessman_names[piece.chessman] +":")
-            for move in allPossibleMoves:
-              posX = move[0]
-              posY = move[1]
-              print(">>> " + toBoard(posX, posY))
-            #shows a option in case user what to change piece
-            print("")
-            print('Insert "0" if you want to chose another piece')
-            
-            #read the position to
-            while True:
-              positionTo = input()
+              #shows choices for the move of the piece
+              print("Chose your next move for the " + chessman_names[piece.chessman] +":")
+              for move in allPossibleMoves:
+                posX = move[0]
+                posY = move[1]
+                print(">>> " + toBoard(posX, posY))
+              #shows a option in case user what to change piece
+              print("")
+              print('Insert "0" if you want to chose another piece')
+              
+              #read the position to
+              while True:
+                positionTo = input()
 
-              #make sure input is not only one character or digit
-              if len(positionTo) == 0:
-                print("The input should be one letter and one digit, try again")
-              else:
-                if positionTo == "0":
-                  printBoard(None)
-                  runTurn(team)
-                  break
-
-                if toSys(positionTo, False):
-                  positionTo = toSys(positionTo, True)
-
-                  if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                    movePieceTo(piece, positionTo[0], positionTo[1])
-                    break
-                  else:
-                    print("That move is not possible, check the list and try again")
-
+                #make sure input is not only one character or digit
+                if len(positionTo) == 0:
+                  print("The input should be one letter and one digit, try again")
                 else:
-                  print("Invaid position, try another one")
+                  if positionTo == "0":
+                    printBoard(None)
+                    runTurn(team)
+                    break
+                  
+                  if isValidPos(positionTo):
+                    if toSys(positionTo, False):
+                      positionTo = toSys(positionTo, True)
 
-            break #finishes the while with all success by the user
+                      if [positionTo[0], positionTo[1]] in allPossibleMoves:
+                        movePieceTo(piece, positionTo[0], positionTo[1])
+                        break
+                      else:
+                        print("That move is not possible, check the list and try again")
+
+                    else:
+                      print("Invaid position, try another one")
+                  else:
+                    print("Not a valid position, try another one.")
+
+              break #finishes the while with all success by the user
+
+          else:
+            print("Empty spot, try another one")
 
         else:
-          print("Empty spot, try another one")
-
+          print("Invaid position, try another one")
       else:
-        print("Invaid position, try another one")
+        print("Not a valid position, try another one.")
 
 #--------------------------------------------------------------
 def runProtectKingTurn(king, oppositeTeam):
@@ -115,6 +121,15 @@ def runProtectKingTurn(king, oppositeTeam):
 
       else:
         print("Invaid position, try another one")
+#--------------------------------------------------------------
+#return true is the pos const of a letter and a number
+def isValidPos(pos):
+  if pos[0].isnumeric() and not pos[1].isnumeric():
+    return True
+  elif not pos[0].isnumeric() and pos[1].isnumeric():
+    return True
+  else:
+    return False
 
 #--------------------------------------------------------------
 #return True if the choosen piece to move is able to move
@@ -250,13 +265,15 @@ def displayMenu():
   print("           2. How to Play")
   print("")
   print("              3. Exit")
+  print("")
+  print("                              by Jem")
   print("++++++++++++++++++++++++++++++++++++")
   print("Choose an option:")
 
   while True:
     choice = input()
 
-    if choice != "" and int(choice):
+    if choice != "" and choice.isnumeric():
       choice = int(choice)
       
       if choice == 1:
@@ -270,7 +287,7 @@ def displayMenu():
         howToPlay()
       elif choice == 3:
         print(">>> THANKS FOR PLAYING, COME BACK SOON!")
-        break
+        exit() #ends the program
       else:
         print("Your choice must be a number between 1 and 3")
     else:
