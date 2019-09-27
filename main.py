@@ -1,8 +1,6 @@
 from classes import *
 from functions import *
 
-displayMenu() #start of the program
-
 #FUNCTIONS
 #-------------------------------------------------------
 def runTurn(team):
@@ -16,9 +14,9 @@ def runTurn(team):
     if len(piecePosition) == 0 or len(piecePosition) == 1:
       print("The input should be one letter and one digit, try again")
     else:
-      if toSys(piecePosition):
+      if toSys(piecePosition, False):
         #the position in this variable is ok
-        piecePosition = toSys(piecePosition)
+        piecePosition = toSys(piecePosition, True)
 
         #check that there are possible moves,
         #otherwive, asks again for position
@@ -54,8 +52,9 @@ def runTurn(team):
             #read the position to
             while True:
               positionTo = input()
+
               #make sure input is not only one character or digit
-              if len(positionTo) == 0 or len(positionTo) == 1:
+              if len(positionTo) == 0:
                 print("The input should be one letter and one digit, try again")
               else:
                 if positionTo == "0":
@@ -63,8 +62,8 @@ def runTurn(team):
                   runTurn(team)
                   break
 
-                if toSys(positionTo):
-                  positionTo = toSys(positionTo)
+                if toSys(positionTo, False):
+                  positionTo = toSys(positionTo, True)
 
                   if [positionTo[0], positionTo[1]] in allPossibleMoves:
                     movePieceTo(piece, positionTo[0], positionTo[1])
@@ -105,8 +104,8 @@ def runProtectKingTurn(king, oppositeTeam):
     if len(positionTo) == 0 or len(positionTo) == 1:
       print("The input should be one letter and one digit, try again")
     else:
-      if toSys(positionTo):
-        positionTo = toSys(positionTo)
+      if toSys(positionTo, False):
+        positionTo = toSys(positionTo, True)
 
         if [positionTo[0], positionTo[1]] in savingMoves:
           movePieceTo(king, positionTo[0], positionTo[1])
@@ -276,3 +275,6 @@ def displayMenu():
         print("Your choice must be a number between 1 and 3")
     else:
       print("Your choice must be a number [1-3]")
+
+
+displayMenu() #start of the program
