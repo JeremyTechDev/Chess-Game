@@ -233,6 +233,17 @@ def startGame(wPlayer, bPlayer):
       opTeamName = "WHITE"
     
     printBoard(None) #prints actual state of the board
+
+    #if only the two kings are remainig, the game is a tie
+    if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
+      print("+++++++++++++++++++++++++++++++++++++")
+      print("              GAME OVER   ")
+      print("    TIE BETWEEN BLACKS AND WHITES")
+      print("")
+      print("Congratulations, " + opPlayer + " and " + player + "!")
+      print("+++++++++++++++++++++++++++++++++++++")
+      exit() #ends program
+
     #if king is on check, player must protect it
     if isOnCheck(teamKing, lastTurn, opTeam):      
       #if there are no saving moves, its a check mate and game is over

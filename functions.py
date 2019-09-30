@@ -93,14 +93,6 @@ def movePieceTo(piece, x, y):
 
       pieceOnSpot.kill()
       piece.moveTo(x, y)
-
-      """
-      #decrease by one the number of pieces
-      if pieceOnSpot.team == "w":
-        whitePieces -= 1
-      else:
-        blackPieces -= 1
-      """
     else:
       print("Spot occupied by your chessman")
 

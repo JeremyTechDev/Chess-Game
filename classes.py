@@ -24,6 +24,13 @@ class Piece():
   def kill(self):
     self.onGame = False
 
+    #remove piece from corresponding list
+    if self in all_black_pieces:
+      all_black_pieces.remove(self)
+    
+    if self in all_white_pieces:
+      all_white_pieces.remove(self)
+
   def moveTo(self, x, y):
       self.x = x
       self.y = y
