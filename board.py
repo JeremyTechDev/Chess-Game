@@ -1,6 +1,4 @@
-from symbols import *
 from functions import *
-from symbols import nums, lets, legend, chessman_names
 
 class Board():
     def __init__(self):
@@ -14,6 +12,19 @@ class Board():
         ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
         ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"]
         ]
+        self.legend = legend = [
+        "| SYMBOLS:",
+        "| W B",
+        "| ♔ ♚ KINGS",
+        "| ♕ ♛ QUEENS",
+        "| ♖ ♜ ROOKS",
+        "| ♘ ♞ KNIGHTS",
+        "| ♗ ♝ BISHOPS",
+        "| ♙ ♟ PAWNS",
+        ]
+        self.lets = ["(A)","(B)","(C)","(D)","(E)","(F)","(G)","(H)"]
+        self.nums = ["(8)","(7)","(6)","(5)","(4)","(3)","(2)","(1)"]
+
 
     #------------------------------------------------------
     #prints the board with the actuals positions
@@ -39,11 +50,14 @@ class Board():
             
             #print num of row, then the array, and then the part 
             #corresponding to the legend
-            print(nums[i] + st + " " + legend[i])
+            print(board.nums[i] + st + " " + self.legend[i])
 
         #print upper letters
         print("   ", end="")
-        for i in lets:
+        for i in board.lets:
             print(i, end="")
         print("")
         print("") #separator lines
+
+board = Board()
+board.print(None)
