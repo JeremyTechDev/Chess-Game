@@ -307,4 +307,4 @@ def displayMenu():
 
 #displayMenu() #start of the program
 wqu.moveTo(5, 3)
-print(wqu.getMoves())
+print(bp1.getKillerMoves())

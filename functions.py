@@ -652,6 +652,7 @@ def getQueenMoves(queen, x, y):
 
   return discardImMoves(queen, moves)
 """
+"""
 #----------------------------------------------------
 #Returns ALL the killer pawn moves
 def getKillerPawnMoves(pawn, x, y):
@@ -676,3 +677,4 @@ def getKillerPawnMoves(pawn, x, y):
       moves.append(possEat2)
 
   return discardImMoves(pawn, moves) 
+"""

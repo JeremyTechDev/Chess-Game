@@ -66,8 +66,8 @@ class Piece():
         finalMoves.append(move)
 
     return finalMoves #returns all posible moves for a piece
-
-#CHILD OBJECTS
+#----------------------------------------------------------------------------
+"""----------------------CHILD OBJECTS"""
 class pawn(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -116,6 +116,31 @@ class pawn(Piece):
 
     return self.discardImMoves(moves)
 
+  #----------------------------------------------------
+  #Returns ALL the killer pawn moves
+  def getKillerMoves(self):
+    moves = [] #the return item
+    a = self.x
+    b = self.y
+    #if it is up or down move
+    if self.team == "w":
+      a -= 1
+    else: 
+      a += 1
+
+    #check if piece can eat an other
+    possEat1 = [a,b-1] #possible Eat 1
+    possEat2 = [a,b+1] #possible Eat 1
+    if (checkForPiece(possEat1[0], possEat1[1]) == True): #if there is a piece
+      if (getPieceAtPosition(possEat1[0], possEat1[1]).team != self.team): 
+        moves.append(possEat1) #if is different team, add move
+    #same with second piece
+    if (checkForPiece(possEat2[0], possEat2[1]) == True):
+      if (getPieceAtPosition(possEat2[0], possEat2[1]).team != self.team):
+        moves.append(possEat2)
+
+    return self.discardImMoves(moves)
+#----------------------------------------------------------------------------
 class rook(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -182,7 +207,7 @@ class rook(Piece):
       i += 1
 
     return self.discardImMoves(moves)
-
+#----------------------------------------------------------------------------
 class knight(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -211,7 +236,7 @@ class knight(Piece):
     moves.append([a-2, b-1])
 
     return self.discardImMoves(moves)
-
+#----------------------------------------------------------------------------
 class bishop(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -283,7 +308,7 @@ class bishop(Piece):
       i += 1
 
     return self.discardImMoves(moves)
-
+#----------------------------------------------------------------------------
 class king(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -312,7 +337,7 @@ class king(Piece):
     moves.append([a-1, b-1])
     
     return self.discardImMoves(moves)
-
+#----------------------------------------------------------------------------
 class queen(Piece):  
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -446,6 +471,7 @@ class queen(Piece):
       i += 1
     
     return self.discardImMoves(moves)
+
 """
 INITIAL POSITIONS
 Position are set by the index of each list,
