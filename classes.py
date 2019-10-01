@@ -152,12 +152,12 @@ class pawn(Piece):
     y = self.y
     print("")
     print("Choose one piece (number) to replace your pawn:")
-    print("1. " + swq,sbq + "  Queen")
-    print("2. " + swki,sbki + "  King")
-    print("3. " + swb,sbb + "  Bishop")
-    print("4. " + swk,sbk + "  Knight")
-    print("5. " + swr,sbr + "  Rook")
-    print("6. " + swp,sbp + "  Pawn")
+    print("1. ♕♛  Queen")
+    print("2. ♔♚  King")
+    print("3. ♗♝  Bishop")
+    print("4. ♘♞  Knight")
+    print("5. ♖♜  Rook")
+    print("6. ♙♟ Pawn")
 
     #read the input, dont accept strings
     while True:  
