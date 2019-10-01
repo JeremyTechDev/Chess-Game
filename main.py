@@ -306,4 +306,4 @@ def displayMenu():
 """
 
 #displayMenu() #start of the program
-print(wki.getMoves())
+print(wb1.getMoves())

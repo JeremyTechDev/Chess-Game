@@ -566,6 +566,7 @@ def getRookMoves(rook, x, y):
 
   return discardImMoves(rook, moves)
 """
+"""
 #----------------------------------------------------
 #Returns ALL the moves for bishop
 def getBishopMoves(bishop, x, y):
@@ -627,13 +628,11 @@ def getBishopMoves(bishop, x, y):
     i += 1
 
   return discardImMoves(bishop, moves)
-
+"""
 #---------------------------------------------------
 #Returns Queen moves
-"""
-As queen moves are equal to all the moves of the king, bishop and rook
-This function adds together all those moves from that position
-"""
+#As queen moves are equal to all the moves of the king, bishop and rook
+#This function adds together all those moves from that position
 def getQueenMoves(queen, x, y):
   moves = [] #return item
   a = x
