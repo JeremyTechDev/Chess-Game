@@ -43,7 +43,7 @@ def printBoard(spots):
     print(i, end="")
   print("")
   print("") #separator lines
-
+"""
 #------------------------------------------------------
 #Returns True if there is a piece in [x][y]
 #otherwise, returns False
@@ -53,7 +53,7 @@ def checkForPiece(x, y):
       if piece.x == x and piece.y == y:
         return True 
   return False
-
+"""
 #------------------------------------------------------
 #Return the type of piece that there is in
 #[x][y]. Ex: bp1 --> white pawn 
@@ -349,6 +349,7 @@ def protectKing(king, oppositeTeam):
     needs the position of the piece [x][y] and the piece
     [a][b] == [x][y] used not to change any data
 """
+"""
 #------------------------------------------------------
 #Discards all imposible moves for any piece
 def discardImMoves(piece, moves):
@@ -380,7 +381,7 @@ def discardImMoves(piece, moves):
       finalMoves.append(move)
 
   return finalMoves #returns all posible moves for a piece
-
+"""
 #-------------------------------------------------------
 #return a list of the kings moves with no moves that can
 #cause a check mate
@@ -427,7 +428,7 @@ def discardCheckMoves(king, moves):
       moves.remove(rem)
 
   return moves #king's moves with no check mate moves
-
+"""
 #------------------------------------------------------
 #Return ALL the moves for pawns
 def getPawnMoves(pawn, x, y):
@@ -465,7 +466,7 @@ def getPawnMoves(pawn, x, y):
       moves.append(possEat2)
 
   return discardImMoves(pawn, moves)
-
+"""
 #----------------------------------------------------
 #Returns ALL the moves for knights
 def getKnightMoves(knight, x, y):

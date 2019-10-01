@@ -35,6 +35,38 @@ class Piece():
     self.x = x
     self.y = y
 
+  #------------------------------------------------------
+  #Discards all imposible moves for any piece
+  def discardImMoves(self, moves):
+    toDelete = []
+
+    #check if piece on move spot
+    for move in moves:
+      if checkForPiece(move[0], move[1]):
+        pieceAtSpot = getPieceAtPosition(move[0], move[1])
+        if self.team == pieceAtSpot.team:
+          #if piece is the same team, remove that move
+          toDelete.append(move)
+
+    #identifies moves outside of the board
+    for move in moves:
+      for cord in move:
+        if cord < 0 or cord > 7:
+          toDelete.append(move)
+
+    #deletes moves outside the board
+    for i in toDelete:
+      if i in moves:
+        moves.remove(i)
+
+    #identifies repeated moves and discard them
+    finalMoves = []
+    for move in moves:
+      if move not in finalMoves:
+        finalMoves.append(move)
+
+    return finalMoves #returns all posible moves for a piece
+
 #CHILD OBJECTS
 class pawn(Piece):
   def __init__(self, x, y, team):
@@ -82,7 +114,7 @@ class pawn(Piece):
       if (getPieceAtPosition(possEat2[0], possEat2[1]).team != self.team):
         moves.append(possEat2)
 
-    return moves
+    return self.discardImMoves(moves)
 
 class rook(Piece):   
   def __init__(self, x, y, team):
