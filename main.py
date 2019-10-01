@@ -1,6 +1,6 @@
 from classes import *
 from functions import *
-
+"""
 #FUNCTIONS
 #-------------------------------------------------------
 def runTurn(team):
@@ -197,7 +197,7 @@ def howToPlay():
   print("")
   displayMenu()
 
-"""
+""
 RUNS BY CYCLES
 >Each cycle is when both White and Black make a move.
 >Stars the game by a White Move.
@@ -209,7 +209,7 @@ prints the last move of the game.
 >2. Shows all possible move for that piece
 >3. User chose one move the his or her turn is over
 >4. The same with the next player
-"""
+""
 #runs while the game is not over
 #parameter are the name of the players
 def startGame(wPlayer, bPlayer):
@@ -303,6 +303,7 @@ def displayMenu():
         print("Your choice must be a number between 1 and 3")
     else:
       print("Your choice must be a number [1-3]")
+"""
 
-
-displayMenu() #start of the program
+#displayMenu() #start of the program
+print(wp1.getMoves())

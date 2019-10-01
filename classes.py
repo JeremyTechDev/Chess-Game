@@ -1,5 +1,5 @@
 from symbols import *
-#from functions import *
+from functions import *
 
 """
 PARAMETHERS:
@@ -32,8 +32,8 @@ class Piece():
       all_white_pieces.remove(self)
 
   def moveTo(self, x, y):
-      self.x = x
-      self.y = y
+    self.x = x
+    self.y = y
 
 #CHILD OBJECTS
 class pawn(Piece):
@@ -46,6 +46,43 @@ class pawn(Piece):
 
     Piece.__init__(self, x, y, team, chessman)
     self.userMoves = 0 
+  
+  #return pawn's possible moves
+  def getMoves(self):
+    moves = [] #the return item
+    a = self.x
+    b = self.y
+
+    #check move direction by team
+    if (self.team == "w"):
+      a -= 1
+      if not checkForPiece(a, b): #if front is empty
+        moves.append([a, b]) #one step up
+
+        if (self.userMoves == 0 and not checkForPiece(a-1, b)):
+          self.firstMove = False
+          moves.append([a-1,b]) #two steps up
+    else:
+      a += 1
+      if not checkForPiece(a, b): #if front is empty
+        moves.append([a, b]) #one step down
+
+        if (self.userMoves == 0 and not checkForPiece(a+1, b)):
+          self.firstMove = False
+          moves.append([a+1,b])  #two step down
+    
+    #check if piece can eat an other
+    possEat1 = [a,b-1] #possible Eat 1
+    possEat2 = [a,b+1] #possible Eat 1
+    if (checkForPiece(possEat1[0], possEat1[1]) == True): #if there is a piece
+      if (getPieceAtPosition(possEat1[0], possEat1[1]).team != self.team): 
+        moves.append(possEat1) #if is different team, add move
+    #same with second piece
+    if (checkForPiece(possEat2[0], possEat2[1]) == True):
+      if (getPieceAtPosition(possEat2[0], possEat2[1]).team != self.team):
+        moves.append(possEat2)
+
+    return moves
 
 class rook(Piece):   
   def __init__(self, x, y, team):
@@ -144,4 +181,17 @@ bqu = queen(0,3,"b")
 
 all_white_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu]
 all_black_pieces = [bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
-all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
+all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,
+bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
+
+
+
+#------------------------------------------------------
+#Returns True if there is a piece in [x][y]
+#otherwise, returns False
+def checkForPiece(x, y):
+  for piece in all_pieces:
+    if piece.onGame == True:
+      if piece.x == x and piece.y == y:
+        return True 
+  return False

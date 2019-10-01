@@ -1,5 +1,5 @@
-from classes import *
 from symbols import nums, lets, legend, chessman_names
+from classes import *
 
 board = [
   ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
