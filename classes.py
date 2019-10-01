@@ -140,6 +140,66 @@ class pawn(Piece):
         moves.append(possEat2)
 
     return self.discardImMoves(moves)
+  
+  #------------------------------------------------------
+  #when pawn reaches the other edge, asks the user with
+  #which piece wants to replace the pawn
+  def replace(self):
+    x = self.x
+    y = self.y
+    print("")
+    print("Choose one piece (number) to replace your pawn:")
+    print("1. " + swq,sbq + "  Queen")
+    print("2. " + swki,sbki + "  King")
+    print("3. " + swb,sbb + "  Bishop")
+    print("4. " + swk,sbk + "  Knight")
+    print("5. " + swr,sbr + "  Rook")
+    print("6. " + swp,sbp + "  Pawn")
+
+    #read the input, dont accept strings
+    while True:  
+      while True:
+        try:
+          choice = int(input())
+          break
+        except:
+          print("Insert a number")
+
+      #makes sure the num is on range of options
+      if 1 <= int(choice) <= 5:
+        choice = int(choice)
+        print("") #space
+        
+        #create the new piece
+        if choice == 1:
+          self.kill()
+          addedQueen = queen(x, y, self.team)
+          all_pieces.append(addedQueen)
+          print("Pawn replaced by a Queen")
+        elif choice == 2:
+          self.kill()
+          addedKing = king(x, y, self.team)
+          all_pieces.append(addedKing)
+          print("Pawn replaced by a King")
+        elif choice == 3:
+          self.kill()
+          addedBishop = bishop(x, y, self.team)
+          all_pieces.append(addedBishop)
+          print("Pawn replaced by a Bishop")
+        elif choice == 4:
+          self.kill()
+          addedKnight = knight(x, y, self.team)
+          all_pieces.append(addedKnight)
+          print("Pawn replaced by a Knight")
+        elif choice == 5:
+          self.kill()
+          addedRook = rook(x, y, self.team)
+          all_pieces.append(addedRook)
+          print("Pawn replaced by a Rook")
+
+        break
+      else:
+        print("Invalid input, please try again")
 #----------------------------------------------------------------------------
 class rook(Piece):   
   def __init__(self, x, y, team):

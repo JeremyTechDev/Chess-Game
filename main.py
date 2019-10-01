@@ -306,5 +306,5 @@ def displayMenu():
 """
 
 #displayMenu() #start of the program
-wqu.moveTo(5, 3)
 print(bp1.getKillerMoves())
+wp1.replace()
