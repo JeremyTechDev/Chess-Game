@@ -629,6 +629,7 @@ def getBishopMoves(bishop, x, y):
 
   return discardImMoves(bishop, moves)
 """
+"""
 #---------------------------------------------------
 #Returns Queen moves
 #As queen moves are equal to all the moves of the king, bishop and rook
@@ -650,7 +651,7 @@ def getQueenMoves(queen, x, y):
       moves.append(move)
 
   return discardImMoves(queen, moves)
-
+"""
 #----------------------------------------------------
 #Returns ALL the killer pawn moves
 def getKillerPawnMoves(pawn, x, y):
@@ -674,5 +675,4 @@ def getKillerPawnMoves(pawn, x, y):
     if (getPieceAtPosition(possEat2[0], possEat2[1]).team != pawn.team):
       moves.append(possEat2)
 
-  #print(discardImMoves(pawn, moves))
   return discardImMoves(pawn, moves) 
