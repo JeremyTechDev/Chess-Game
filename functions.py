@@ -488,7 +488,7 @@ def getKnightMoves(knight, x, y):
 
   return discardImMoves(knight, moves)
 """
-
+"""
 #----------------------------------------------------
 #Returns ALL the moves for king
 def getKingMoves(king, x, y):
@@ -507,6 +507,7 @@ def getKingMoves(king, x, y):
   moves.append([a-1, b-1])
   
   return discardImMoves(king, moves)
+"""
 """
 #----------------------------------------------------
 #Returns ALL the moves for rook
