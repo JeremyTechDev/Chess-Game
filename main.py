@@ -306,4 +306,4 @@ def displayMenu():
 """
 
 #displayMenu() #start of the program
-print(wp1.getMoves())
+print(wr1.getMoves())

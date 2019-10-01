@@ -65,7 +65,7 @@ def getSymbol(x,y):
         return " " + piece.chessman + " "
   return "[ ]"
 
-#------------------------------------------------------
+"""#------------------------------------------------------
 #Returns the piece at given position [x][y]
 #Return None if there is no piece at position [x][y]
 def getPieceAtPosition(x,y):
@@ -74,7 +74,7 @@ def getPieceAtPosition(x,y):
       if piece.x == x and piece.y == y:
         return piece
   return None
-
+"""
 #------------------------------------------------------
 def movePieceTo(piece, x, y):
   if not checkForPiece(x,y):
@@ -382,6 +382,7 @@ def discardImMoves(piece, moves):
 
   return finalMoves #returns all posible moves for a piece
 """
+
 #-------------------------------------------------------
 #return a list of the kings moves with no moves that can
 #cause a check mate
@@ -504,7 +505,7 @@ def getKingMoves(king, x, y):
   moves.append([a-1, b-1])
   
   return discardImMoves(king, moves)
-
+"""
 #----------------------------------------------------
 #Returns ALL the moves for rook
 def getRookMoves(rook, x, y):
@@ -561,7 +562,7 @@ def getRookMoves(rook, x, y):
     i += 1
 
   return discardImMoves(rook, moves)
-
+"""
 #----------------------------------------------------
 #Returns ALL the moves for bishop
 def getBishopMoves(bishop, x, y):
