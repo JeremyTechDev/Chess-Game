@@ -1,6 +1,6 @@
 from symbols import nums, lets, legend, chessman_names
 from classes import *
-
+"""
 board = [
   ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
   ["[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]","[ ]"],
@@ -43,6 +43,7 @@ def printBoard(spots):
     print(i, end="")
   print("")
   print("") #separator lines
+"""
 """
 #------------------------------------------------------
 #Returns True if there is a piece in [x][y]
@@ -107,7 +108,7 @@ def movePieceTo(piece, x, y):
   #for black piece
   if (piece.__class__ == pawn) and (piece.team == "b") and (piece.x == 7):
     replacePawn(piece, x, y)
-
+"""
 #------------------------------------------------------
 #when pawn reaches the other edge, asks the user with
 #which piece wants to replace the pawn
@@ -165,7 +166,7 @@ def replacePawn(pawn, x, y):
       break
     else:
       print("Invalid input, please try again")
-
+"""
 #--------------------------------------------------------
 #return the getMoves funtions that must be used
 #depending on the piece chosen by the user

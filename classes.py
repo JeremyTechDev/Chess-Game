@@ -14,10 +14,11 @@ moveTo -> move given piece to the position [x][y]
 """
 
 class Piece():
-  def __init__(self,x,y,team,chessman):
+  def __init__(self,x,y,team,name,chessman):
     self.x = x
     self.y = y
     self.team = team
+    self.name = name
     self.chessman = chessman
     self.onGame = True
 
@@ -72,11 +73,13 @@ class pawn(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
     if team == "w":
-      chessman = swp
+      chessman = "♙"
+      name = "White Pawn"
     else:
-      chessman = sbp
+      chessman = "♟"
+      name = "Black Pawn"
 
-    Piece.__init__(self, x, y, team, chessman)
+    Piece.__init__(self, x, y, team, name, chessman)
     self.userMoves = 0 
   
   #return pawn's possible moves
@@ -205,11 +208,13 @@ class rook(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
     if team == "w":
-      chessman = swr
+      chessman = "♖"
+      name = "White Rook"
     else:
-      chessman = sbr
+      chessman = "♜"
+      name = "Black Rook"
 
-    Piece.__init__(self, x, y, team, chessman) 
+    Piece.__init__(self, x, y, team, name, chessman) 
 
   #----------------------------------------------------
   #Returns ALL the moves for rook
@@ -272,11 +277,13 @@ class knight(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
     if team == "w":
-      chessman = swk
+      chessman = "♘"
+      name = "White Knight"
     else:
-      chessman = sbk
+      chessman = "♞"
+      name = "Balck Knight"
 
-    Piece.__init__(self, x, y, team, chessman)
+    Piece.__init__(self, x, y, team, name, chessman)
 
   #----------------------------------------------------
   #Returns ALL the moves for knights
@@ -301,11 +308,13 @@ class bishop(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
     if team == "w":
-      chessman = swb
+      chessman = "♗"
+      name = "White Bishop"
     else:
-      chessman = sbb
+      chessman = "♝"
+      name = "Black Bishop"
 
-    Piece.__init__(self, x, y, team, chessman) 
+    Piece.__init__(self, x, y, team, name, chessman) 
 
   #----------------------------------------------------
   #Returns ALL the moves for bishop
@@ -373,11 +382,13 @@ class king(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
     if team == "w":
-      chessman = swki
+      chessman = "♔"
+      name = "White King"
     else:
-      chessman = sbki
+      chessman = "♚"
+      name = "Black King"
 
-    Piece.__init__(self, x, y, team, chessman) 
+    Piece.__init__(self, x, y, team, name, chessman) 
   
   #----------------------------------------------------
   #Returns ALL the moves for king
@@ -402,11 +413,13 @@ class queen(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
     if team == "w":
-      chessman = swq
+      chessman = "♕"
+      name = "White Queen"
     else:
-      chessman = sbq
+      chessman = "♛"
+      name = "Black Queen"
     
-    Piece.__init__(self, x, y, team, chessman) 
+    Piece.__init__(self, x, y, team, name, chessman) 
 
   #---------------------------------------------------
   #Returns Queen moves

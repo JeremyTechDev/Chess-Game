@@ -306,5 +306,5 @@ def displayMenu():
 """
 
 #displayMenu() #start of the program
-print(bp1.getKillerMoves())
-wp1.replace()
+#print(bp1.getKillerMoves())
+print(wp1.chessman)
