@@ -468,6 +468,7 @@ def getPawnMoves(pawn, x, y):
 
   return discardImMoves(pawn, moves)
 """
+"""
 #----------------------------------------------------
 #Returns ALL the moves for knights
 def getKnightMoves(knight, x, y):
@@ -486,6 +487,7 @@ def getKnightMoves(knight, x, y):
   moves.append([a-2, b-1])
 
   return discardImMoves(knight, moves)
+"""
 
 #----------------------------------------------------
 #Returns ALL the moves for king
