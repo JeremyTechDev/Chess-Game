@@ -35,7 +35,7 @@ class Piece():
       #print the piece that moved
       moved = self.name
       position = toBoard(x,y) #gets boards position
-      print(moved + " moved to " + position)
+      rtMessage = moved + " moved to " + position
       #move the piece to new position
       self.x = x
       self.y = y
@@ -45,7 +45,7 @@ class Piece():
         #to print kill message
         killed = pieceOnSpot.name
         killer = self.name
-        print(killed + " killed by a " + killer)
+        rtMessage = killed + " killed by a " + killer
         pieceOnSpot.kill()
         #move the piece to new position
         self.x = x
@@ -62,6 +62,8 @@ class Piece():
     #for black piece
     if (self.__class__ == pawn) and (self.team == "b") and (self.x == 7):
       self.replace()
+    
+    return rtMessage #to print move state
 
   #------------------------------------------------------
   #Discards all imposible moves for any piece
