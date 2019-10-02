@@ -54,6 +54,7 @@ def checkForPiece(x, y):
         return True 
   return False
 """
+"""
 #------------------------------------------------------
 #Return the type of piece that there is in
 #[x][y]. Ex: bp1 --> white pawn 
@@ -64,7 +65,7 @@ def getSymbol(x,y):
       if piece.x == x and piece.y == y:
         return " " + piece.chessman + " "
   return "[ ]"
-
+"""
 """#------------------------------------------------------
 #Returns the piece at given position [x][y]
 #Return None if there is no piece at position [x][y]

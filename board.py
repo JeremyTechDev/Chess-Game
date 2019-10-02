@@ -39,7 +39,8 @@ class Board():
                 #otherwise, prints empty space '[ ]'
                 if (checkForPiece(i,j)):
                     if((spots != None) and ([i, j] in spots)): #checks if move-spot in position to print ()
-                        st += "(" + getSymbol(i, j)[1] + ")"
+                        piece = getPieceAtPosition(i, j)
+                        st += "(" + piece.chessman + ")"
                     else: #otherwise, only prints the piece 
                         st += getSymbol(i,j)
                 else:
@@ -60,4 +61,4 @@ class Board():
         print("") #separator lines
 
 board = Board()
-board.print(None)
+board.print([[5, 3]])
