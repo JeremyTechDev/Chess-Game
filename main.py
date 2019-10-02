@@ -1,5 +1,6 @@
 from classes import *
 from functions import *
+from board import *
 """
 #FUNCTIONS
 #-------------------------------------------------------
@@ -306,5 +307,6 @@ def displayMenu():
 """
 
 #displayMenu() #start of the program
-#print(bp1.getKillerMoves())
-print(wp1.chessman)
+board = Board()
+wp1.moveTo(0, 1)
+board.print(None)

@@ -32,8 +32,40 @@ class Piece():
       all_white_pieces.remove(self)
 
   def moveTo(self, x, y):
-    self.x = x
-    self.y = y
+    #x and y are the new position
+
+    #if the move is to empty spot, there is no kill
+    if not checkForPiece(x,y):
+      #print the piece that moved
+      moved = self.name
+      position = toBoard(x,y) #gets boards position
+      print(moved + " moved to " + position)
+      #move the piece to new position
+      self.x = x
+      self.y = y
+    else: #if it is to occupied spot, its a kill
+      pieceOnSpot = getPieceAtPosition(x, y)
+      if pieceOnSpot.team != self.team:
+        #to print kill message
+        killed = pieceOnSpot.name
+        killer = self.name
+        print(killed + " killed by a " + killer)
+        pieceOnSpot.kill()
+        #move the piece to new position
+        self.x = x
+        self.y = y
+
+    #increment pawn moves to discard the posibility of doble jump on first move
+    if self.__class__ == pawn:
+      self.userMoves += 1
+
+    #check if pawn is on the other side to ask for the piece to add and replace the pawn
+    #for white piece
+    if (self.__class__ == pawn) and (self.team == "w") and (self.x == 0):
+      self.replace()
+    #for black piece
+    if (self.__class__ == pawn) and (self.team == "b") and (self.x == 7):
+      self.replace()
 
   #------------------------------------------------------
   #Discards all imposible moves for any piece
@@ -151,12 +183,12 @@ class pawn(Piece):
     y = self.y
     print("")
     print("Choose one piece (number) to replace your pawn:")
-    print("1. ♕♛  Queen")
-    print("2. ♔♚  King")
-    print("3. ♗♝  Bishop")
-    print("4. ♘♞  Knight")
-    print("5. ♖♜  Rook")
-    print("6. ♙♟ Pawn")
+    print("1. ♕ ♛  Queen")
+    print("2. ♔ ♚  King")
+    print("3. ♗ ♝  Bishop")
+    print("4. ♘ ♞  Knight")
+    print("5. ♖ ♜  Rook")
+    print("6. ♙ ♟ Pawn")
 
     #read the input, dont accept strings
     while True:  

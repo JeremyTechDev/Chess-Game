@@ -76,6 +76,7 @@ def getPieceAtPosition(x,y):
         return piece
   return None
 """
+"""
 #------------------------------------------------------
 def movePieceTo(piece, x, y):
   if not checkForPiece(x,y):
@@ -108,6 +109,7 @@ def movePieceTo(piece, x, y):
   #for black piece
   if (piece.__class__ == pawn) and (piece.team == "b") and (piece.x == 7):
     replacePawn(piece, x, y)
+"""
 """
 #------------------------------------------------------
 #when pawn reaches the other edge, asks the user with

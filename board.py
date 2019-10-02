@@ -59,6 +59,3 @@ class Board():
             print(i, end="")
         print("")
         print("") #separator lines
-
-board = Board()
-board.print([[5, 3]])
