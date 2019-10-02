@@ -435,6 +435,151 @@ class king(Piece):
     
     return self.discardImMoves(moves)
 
+  #-----------------------------------------------------
+  #return a team's all possible moves, ignoring the pawns
+  def getOpponetMoves(self):
+    result = [] #return item
+
+    #get the team's pieces
+    if self.team == "w":
+      teamList = all_black_pieces
+    else:
+      teamList = all_white_pieces
+
+    for piece in teamList:
+      #ignore pawn up and down moves
+      if piece.__class__ != pawn:
+        moves = piece.getMoves()
+      else: #consider pawns kill moves
+        moves = piece.getKillerMoves() 
+
+      for move in moves:
+        #check if move is not repeated
+        if move not in result:
+          result.append(move)
+    
+    return result
+
+  #-----------------------------------------------------
+  #Returns True is the king of the given team is on check
+  #Otherwise, returns False
+  def isOnCheck(self):
+    #get kings postiion [x][y]
+    posKing = [self.x, self.y]
+    if self.team == "w":
+      oppositeTeam = "b"
+    else:
+      oppositeTeam = "w"
+
+    #if there is a piece different that the king in that position,
+    #temporaly move it to out of the board because it is virtualy killed
+    tPiece = None
+    actTX = None
+    actTY = None
+    for piece in all_pieces:
+      piecePos = [piece.x, piece.y]
+      if piecePos == posKing and piece != self:
+        tPiece = piece
+        actTX = piece.x
+        actTY = piece.y
+        #move piece to temporal new position
+        piece.moveTo(9, 9)
+        break
+
+    #get all rival possible moves
+    rivalMoves = self.getOpponetMoves()
+
+    #get piece back to its position
+    if tPiece != None:
+      tPiece.moveTo(actTX, actTY)
+
+    if posKing in rivalMoves:
+      return True
+    else:
+      return False
+
+  #-------------------------------------------------------
+  #shows all the pieces that can move to protect the king
+  #return a list of moves that can save the king
+  def protect(self):
+    savingKingMoves = [] #return item
+
+    #set opposite team
+    if self.team == "w":
+      oppositeTeam = "b"
+    else:
+      oppositeTeam = "w"
+
+    #get king's moves
+    kingMoves = self.getMoves()
+
+    #save king's actual positions to return to it later
+    actKingX = self.x
+    actKingY = self.y
+
+    #consider moves in the king's next position
+    #given by the kingMoves
+    for kingM in kingMoves:
+      possX = kingM[0] #possible next X
+      possY = kingM[1] #possible next Y
+      #move the king to the possible next move
+      self.moveTo(possX, possY)
+      #if king is on check in that position, in not savingMove
+      if not self.isOnCheck():
+        savingKingMoves.append([self.x, self.y])
+    
+    #return king to its original possition
+    self.moveTo(actKingX, actKingY)
+
+    return self.discardCheckMoves(savingKingMoves)
+
+  #-------------------------------------------------------
+  #return a list of the kings moves with no moves that can
+  #cause a check mate
+  def discardCheckMoves(self, moves):
+    toDelete = [] #add check mate moves here to delete later
+    #save king's real position
+    a = self.x 
+    b = self.y
+
+    #discard move is there is check there, to avoid check mate
+    for move in moves:
+      #if piece at move spot, move it kill it temporaly to check check
+      pieceOnSpot = None
+      posX = None
+      posY = None
+      if checkForPiece(move[0], move[1]):
+        pieceOnSpot = getPieceAtPosition(move[0], move[1])
+        #save piece on spot real position
+        posX = pieceOnSpot.x
+        posY = pieceOnSpot.y
+
+        #temporaly move the piece out of board
+        pieceOnSpot.moveTo(9, 9)
+
+      #move king to possible next move to check is chesk mate
+      self.moveTo(move[0], move[1])
+      if self.team == "w":
+        opTeam = "b"
+      else:
+        opTeam = "w"
+      if self.isOnCheck():
+        toDelete.append(move) #to delete later
+
+      #move piece on spot back to real place
+      if pieceOnSpot != None:
+        pieceOnSpot.moveTo(posX, posY)
+    
+      #move king back to its real position
+      self.moveTo(a, b)
+    
+    #delete check mete moves
+    for rem in toDelete:
+      if rem in moves:
+        moves.remove(rem)
+
+    return moves #king's moves with no check mate moves
+
 class queen(Piece):  
   def __init__(self, x, y, team):
     #get symbol from symbols.py

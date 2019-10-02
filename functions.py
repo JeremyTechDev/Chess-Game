@@ -169,6 +169,7 @@ def replacePawn(pawn, x, y):
     else:
       print("Invalid input, please try again")
 """
+""" NOT IN USE
 #--------------------------------------------------------
 #return the getMoves funtions that must be used
 #depending on the piece chosen by the user
@@ -185,15 +186,16 @@ def getMoveFunction(piece):
     return getKingMoves
   elif piece.__class__ == queen:
     return getQueenMoves
-
+NOT ON USE
+"""
 """
   POSITION TRANSLATE FUNCTIONS
 """
 #------------------------------------------------------
 #returns [x][y] position on board style [ch][#]
 def toBoard(x, y):
-  listX = [8,7,6,5,4,3,2,1]
-  listY = ["A","B","C","D","E","F","G","H"]
+  listX = [8,7,6,5,4,3,2,1,0,0,0,0]
+  listY = ["A","B","C","D","E","F","G","H","0","0","0","0"]
 
   return listY[y] + str(listX[x])
 
@@ -223,6 +225,7 @@ def toSys(pos, tell):
 """
   END GAME FUNTIONS
 """
+"""
 #-----------------------------------------------------
 #return a team's all possible moves, ignoring the pawns
 def getTeamMoves(team):
@@ -247,7 +250,8 @@ def getTeamMoves(team):
         result.append(move)
   
   return result
-
+"""
+"""
 #-----------------------------------------------------
 #Returns True is the king of the given team is on check
 #Otherwise, returns False
@@ -281,7 +285,8 @@ def isOnCheck(king, team, oppositeTeam):
     return True
   else:
     return False
-
+"""
+""" SEGMENT NOT IN USE
 #----------------------------------------------------
 #return all the attacker of the king at position [x][y],
 #all the pieces that can kill the king on the next move
@@ -315,7 +320,9 @@ def getKingsAttackersMoves(kingsAttackers):
         result.append(move)
   
   return result
-
+SEGMENT NOT IN USE
+"""
+"""
 #-------------------------------------------------------
 #shows all the pieces that can move to protect the king
 #return a list of moves that can save the king
@@ -344,7 +351,7 @@ def protectKing(king, oppositeTeam):
   king.moveTo(actKingX, actKingY)
 
   return savingKingMoves
-
+"""
 """
             GETTERS OF PIECE MOVES
     returns a list if ALL the moves a piece can make
@@ -385,7 +392,7 @@ def discardImMoves(piece, moves):
 
   return finalMoves #returns all posible moves for a piece
 """
-
+"""
 #-------------------------------------------------------
 #return a list of the kings moves with no moves that can
 #cause a check mate
@@ -432,6 +439,7 @@ def discardCheckMoves(king, moves):
       moves.remove(rem)
 
   return moves #king's moves with no check mate moves
+"""
 """
 #------------------------------------------------------
 #Return ALL the moves for pawns

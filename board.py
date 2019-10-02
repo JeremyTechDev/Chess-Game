@@ -1,4 +1,5 @@
 from functions import *
+from piece import *
 
 class Board():
     def __init__(self):
@@ -38,11 +39,11 @@ class Board():
                 #if piece at position [x][y], prints Piece
                 #otherwise, prints empty space '[ ]'
                 if (checkForPiece(i,j)):
+                    piece = getPieceAtPosition(i, j)
                     if((spots != None) and ([i, j] in spots)): #checks if move-spot in position to print ()
-                        piece = getPieceAtPosition(i, j)
                         st += "(" + piece.chessman + ")"
                     else: #otherwise, only prints the piece 
-                        st += getSymbol(i,j)
+                        st += " " + piece.chessman + " "
                 else:
                     if((spots != None) and ([i, j] in spots)): #checks if move-spot in position to print ()
                         st += "( )"
@@ -51,11 +52,11 @@ class Board():
             
             #print num of row, then the array, and then the part 
             #corresponding to the legend
-            print(board.nums[i] + st + " " + self.legend[i])
+            print(self.nums[i] + st + " " + self.legend[i])
 
         #print upper letters
         print("   ", end="")
-        for i in board.lets:
+        for i in self.lets:
             print(i, end="")
         print("")
         print("") #separator lines

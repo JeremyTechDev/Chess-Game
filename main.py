@@ -308,5 +308,6 @@ def displayMenu():
 
 #displayMenu() #start of the program
 board = Board()
-wp1.moveTo(0, 1)
+wki.moveTo(2, 6)
 board.print(None)
+print(wki.protect())
