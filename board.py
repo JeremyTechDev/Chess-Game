@@ -1,6 +1,18 @@
 from functions import *
 from piece import *
 
+"""
+PARAMETHER:
+board -> Full empty board
+legend -> The side text of the board when print
+lets -> Letters for the cords
+nums -> Numbers for the cords
+
+FUNCTIONS:
+print -> print the board on different states,
+if sports is not None, it will print the spots 
+highlighted by ( )
+"""
 class Board():
     def __init__(self):
         self.board = [
