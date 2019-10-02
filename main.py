@@ -1,4 +1,4 @@
-from classes import *
+from piece import *
 from functions import *
 from board import *
 """
