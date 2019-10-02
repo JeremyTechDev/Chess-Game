@@ -1,6 +1,6 @@
 from piece import *
-from functions import *
-from board import *
+from board import Board
+#from functions import *
 """
 #FUNCTIONS
 #-------------------------------------------------------

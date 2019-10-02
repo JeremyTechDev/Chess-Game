@@ -1,15 +1,11 @@
 from functions import *
-
 """
 PARAMETHERS:
 X -> number of the List
 Y -> index on the List Y
 team -> black or white
+name -> name of the piece
 chessman -> variable with the name of the symbol
-
-FUNCTIONS:
-kill -> set the piece out of the game
-moveTo -> move given piece to the position [x][y]
 """
 
 class Piece():
@@ -98,8 +94,7 @@ class Piece():
         finalMoves.append(move)
 
     return finalMoves #returns all posible moves for a piece
-#----------------------------------------------------------------------------
-"""----------------------CHILD OBJECTS"""
+
 class pawn(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -234,7 +229,7 @@ class pawn(Piece):
         break
       else:
         print("Invalid input, please try again")
-#----------------------------------------------------------------------------
+
 class rook(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -303,7 +298,7 @@ class rook(Piece):
       i += 1
 
     return self.discardImMoves(moves)
-#----------------------------------------------------------------------------
+
 class knight(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -312,7 +307,7 @@ class knight(Piece):
       name = "White Knight"
     else:
       chessman = "♞"
-      name = "Balck Knight"
+      name = "Black Knight"
 
     Piece.__init__(self, x, y, team, name, chessman)
 
@@ -334,7 +329,7 @@ class knight(Piece):
     moves.append([a-2, b-1])
 
     return self.discardImMoves(moves)
-#----------------------------------------------------------------------------
+
 class bishop(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -408,7 +403,7 @@ class bishop(Piece):
       i += 1
 
     return self.discardImMoves(moves)
-#----------------------------------------------------------------------------
+
 class king(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -439,7 +434,7 @@ class king(Piece):
     moves.append([a-1, b-1])
     
     return self.discardImMoves(moves)
-#----------------------------------------------------------------------------
+
 class queen(Piece):  
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -584,7 +579,6 @@ NOT by a matrix. "X" is number of the list and
 Position [0][0] is the top left spot
 Position [7][7] is the bottom right spot
 """
-
 #WHITES
 wp1 = pawn(6,0,"w")
 wp2 = pawn(6,1,"w")
@@ -625,7 +619,6 @@ all_white_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,
 all_black_pieces = [bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,
 bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
-
 
 
 #------------------------------------------------------
