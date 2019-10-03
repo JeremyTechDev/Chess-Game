@@ -137,7 +137,7 @@ class pawn(Piece):
     possEat1 = [a,b-1] #possible Eat 1
     possEat2 = [a,b+1] #possible Eat 1
     if (checkForPiece(possEat1[0], possEat1[1]) == True): #if there is a piece
-      if (getPieceAtPosition(possEat1[0], possEat1[1]).team != self.team): 
+      if (getPieceAtPosition(possEat1[0], FpossEat1[1]).team != self.team): 
         moves.append(possEat1) #if is different team, add move
     #same with second piece
     if (checkForPiece(possEat2[0], possEat2[1]) == True):
@@ -512,7 +512,7 @@ class king(Piece):
   #-------------------------------------------------------
   #shows all the pieces that can move to protect the king
   #return a list of moves that can save the king
-  def protect(self):
+  def getSavingMoves(self):
     savingKingMoves = [] #return item
 
     #set opposite team
@@ -590,6 +590,43 @@ class king(Piece):
         moves.remove(rem)
 
     return moves #king's moves with no check mate moves
+  
+  #--------------------------------------------------------------
+  def protect(self):
+    print("Move it to a saving position, shown below:")
+
+    #get opposite team
+    opTeam = "b" if self.team == "w" else "w"
+
+    #get saving moves:
+    savingMoves = king.getSavingMoves()
+
+    #print board showing saving moves
+    board.print(savingMoves)
+
+    #show moves
+    for move in savingMoves:
+      posX = move[0]
+      posY = move[1]
+      print(">>> " + toBoard(posX, posY))
+    
+    while True:
+      positionTo = input()
+
+      if len(positionTo) == 0 or len(positionTo) == 1:
+        print("The input should be one letter and one digit, try again")
+      else:
+        if toSys(positionTo, False):
+          positionTo = toSys(positionTo, True)
+
+          if [positionTo[0], positionTo[1]] in savingMoves:
+            movePieceTo(king, positionTo[0], positionTo[1])
+            break
+          else:
+            print("That move is not possible, check the list and try again")
+
+        else:
+          print("Invaid position, try another one")
 
 #-----------------------------------------------------------------------
 #>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS QUEEN

@@ -1,7 +1,7 @@
 from piece import *
 from board import Board
 #from functions import *
-"""
+
 #FUNCTIONS
 #-------------------------------------------------------
 def runTurn(team):
@@ -29,20 +29,20 @@ def runTurn(team):
             #get the specific piece
             piece = getPieceAtPosition(x, y)
             #find all moves for the piece after finding the piece type with getMoveFunction(piece)
-            allPossibleMoves = getMoveFunction(piece)(piece, x, y)
+            allPossibleMoves = piece.getMoves()
 
             #if piece is a king, discard check moves
             if piece.__class__ == king:
-              allPossibleMoves = discardCheckMoves(piece, allPossibleMoves)
+              allPossibleMoves = piece.discardCheckMoves(allPossibleMoves)
 
             if len(allPossibleMoves) == 0:
-              print("No possible moves for " + chessman_names[piece.chessman] + ", try another one")
+              print("No possible moves for " + piece.name + ", try another one")
             else:
               #prints the board showing the possible moves of the piece chosen as ( )
-              printBoard(allPossibleMoves)
+              board.print(allPossibleMoves)
 
               #shows choices for the move of the piece
-              print("Chose your next move for the " + chessman_names[piece.chessman] +":")
+              print("Chose your next move for the " + piece.name +":")
               for move in allPossibleMoves:
                 posX = move[0]
                 posY = move[1]
@@ -60,7 +60,7 @@ def runTurn(team):
                   print("The input should be one letter and one digit, try again")
                 else:
                   if positionTo == "0":
-                    printBoard(None)
+                    board.print(None)
                     runTurn(team)
                     break
                   
@@ -69,7 +69,7 @@ def runTurn(team):
                       positionTo = toSys(positionTo, True)
 
                       if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                        movePieceTo(piece, positionTo[0], positionTo[1])
+                        piece.moveTo(positionTo[0], positionTo[1])
                         break
                       else:
                         print("That move is not possible, check the list and try again")
@@ -89,39 +89,6 @@ def runTurn(team):
       else:
         print("Not a valid position, try another one.")
 
-#--------------------------------------------------------------
-def runProtectKingTurn(king, oppositeTeam):
-  print("Move it to a saving position, shown below:")
- 
-  #get saving moves:
-  savingMoves = protectKing(king, oppositeTeam)
-
-  #print board showing saving moves
-  printBoard(savingMoves)
-
-  #show moves
-  for move in savingMoves:
-    posX = move[0]
-    posY = move[1]
-    print(">>> " + toBoard(posX, posY))
-  
-  while True:
-    positionTo = input()
-
-    if len(positionTo) == 0 or len(positionTo) == 1:
-      print("The input should be one letter and one digit, try again")
-    else:
-      if toSys(positionTo, False):
-        positionTo = toSys(positionTo, True)
-
-        if [positionTo[0], positionTo[1]] in savingMoves:
-          movePieceTo(king, positionTo[0], positionTo[1])
-          break
-        else:
-          print("That move is not possible, check the list and try again")
-
-      else:
-        print("Invaid position, try another one")
 #--------------------------------------------------------------
 #return true is the pos const of a letter and a number
 def isValidPos(pos):
@@ -174,7 +141,7 @@ def getPlayers():
 def howToPlay():
   print(">>> HOW TO PLAY")
   print("This is how the board looks like:")
-  printBoard(None)
+  board.print(None)
 
   print("> This is the chess board, the black pieces are shown")
   print("  at the top and the white pieces, at the bottom.")
@@ -198,7 +165,7 @@ def howToPlay():
   print("")
   displayMenu()
 
-""
+"""
 RUNS BY CYCLES
 >Each cycle is when both White and Black make a move.
 >Stars the game by a White Move.
@@ -210,7 +177,7 @@ prints the last move of the game.
 >2. Shows all possible move for that piece
 >3. User chose one move the his or her turn is over
 >4. The same with the next player
-""
+"""
 #runs while the game is not over
 #parameter are the name of the players
 def startGame(wPlayer, bPlayer):
@@ -233,7 +200,7 @@ def startGame(wPlayer, bPlayer):
       teamName = "BLACK"
       opTeamName = "WHITE"
     
-    printBoard(None) #prints actual state of the board
+    board.print(None) #prints actual state of the board
 
     #if only the two kings are remainig, the game is a tie
     if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
@@ -246,9 +213,9 @@ def startGame(wPlayer, bPlayer):
       exit() #ends program
 
     #if king is on check, player must protect it
-    if isOnCheck(teamKing, lastTurn, opTeam):      
+    if teamKing.isOnCheck():      
       #if there are no saving moves, its a check mate and game is over
-      savingMoves = protectKing(teamKing, opTeam)
+      savingMoves = teamKing.protect()
       if len(savingMoves) == 0:
         print("+++++++++++++++++++++++++++++++++++++")
         print("              GAME OVER   ")
@@ -304,10 +271,6 @@ def displayMenu():
         print("Your choice must be a number between 1 and 3")
     else:
       print("Your choice must be a number [1-3]")
-"""
 
-#displayMenu() #start of the program
 board = Board()
-wki.moveTo(2, 6)
-board.print(None)
-print(wki.protect())
+displayMenu() #start of the program
