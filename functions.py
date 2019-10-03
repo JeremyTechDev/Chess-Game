@@ -16,6 +16,7 @@ def toSys(pos, tell):
     print("")
     print('>>> Only "' + pos[:2] + '" in consideration.')
 
+  #check if input is type A3 or 3A
   if pos[0].isnumeric():
     num = pos[0]
     let = (pos[1]).upper()

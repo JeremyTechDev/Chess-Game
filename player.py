@@ -7,12 +7,12 @@ class Player():
         else:
             self.teamName = "BLACK"
 
-        #ask name
+        #ask name and set name
         print("Insert a nickname for the " + self.teamName + "'S player:")
         while True:
             name = input()
             if name != "" and name != " ":
-                self.name = name
+                self.name = name #save name
                 break
             else:
                 print("Please, insert a valid name")

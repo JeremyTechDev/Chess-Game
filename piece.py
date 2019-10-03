@@ -6,6 +6,7 @@ Y -> index on the List Y
 team -> black or white
 name -> name of the piece
 chessman -> variable with the name of the symbol
+onGame -> True if piece has not been killed yet
 """
 
 class Piece():
@@ -33,19 +34,15 @@ class Piece():
     #if the move is to empty spot, there is no kill
     if not checkForPiece(x,y):
       #print the piece that moved
-      moved = self.name
-      position = toBoard(x,y) #gets boards position
-      rtMessage = moved + " moved to " + position
+      rtMessage = self.name + " moved to " + toBoard(x, y)
       #move the piece to new position
       self.x = x
       self.y = y
     else: #if it is to occupied spot, its a kill
       pieceOnSpot = getPieceAtPosition(x, y)
       if pieceOnSpot.team != self.team:
-        #to print kill message
-        killed = pieceOnSpot.name
-        killer = self.name
-        rtMessage = killed + " killed by a " + killer
+        #print kill message
+        rtMessage = pieceOnSpot.name + " killed by a " + self.name
         pieceOnSpot.kill()
         #move the piece to new position
         self.x = x
@@ -63,7 +60,7 @@ class Piece():
     if (self.__class__ == pawn) and (self.team == "b") and (self.x == 7):
       self.replace()
     
-    return rtMessage #to print move state
+    return rtMessage #to print the move 
 
   #------------------------------------------------------
   #Discards all imposible moves for any piece
@@ -97,6 +94,8 @@ class Piece():
 
     return finalMoves #returns all posible moves for a piece
 
+#-----------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS PAWN
 class pawn(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -178,14 +177,16 @@ class pawn(Piece):
   def replace(self):
     x = self.x
     y = self.y
-    print("")
-    print("Choose one piece (number) to replace your pawn:")
-    print("1. ♕ ♛  Queen")
-    print("2. ♔ ♚  King")
-    print("3. ♗ ♝  Bishop")
-    print("4. ♘ ♞  Knight")
-    print("5. ♖ ♜  Rook")
-    print("6. ♙ ♟ Pawn")
+    printMes = """
+    Choose one piece (number) to replace your pawn:
+    1. ♕ ♛  Queen
+    2. ♔ ♚  King
+    3. ♗ ♝  Bishop
+    4. ♘ ♞  Knight
+    5. ♖ ♜  Rook
+    6. ♙ ♟ Pawn
+    """
+    print(printMes)
 
     #read the input, dont accept strings
     while True:  
@@ -232,6 +233,8 @@ class pawn(Piece):
       else:
         print("Invalid input, please try again")
 
+#-----------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS ROOK
 class rook(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -301,6 +304,8 @@ class rook(Piece):
 
     return self.discardImMoves(moves)
 
+#-----------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS KNIGHT
 class knight(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -332,6 +337,8 @@ class knight(Piece):
 
     return self.discardImMoves(moves)
 
+#-----------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS BISHOP
 class bishop(Piece):   
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -406,6 +413,8 @@ class bishop(Piece):
 
     return self.discardImMoves(moves)
 
+#-----------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS KING
 class king(Piece):
   def __init__(self, x, y, team):
     #get symbol from symbols.py
@@ -582,6 +591,8 @@ class king(Piece):
 
     return moves #king's moves with no check mate moves
 
+#-----------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>>>>>  CLASS QUEEN
 class queen(Piece):  
   def __init__(self, x, y, team):
     #get symbol from symbols.py
