@@ -33,7 +33,7 @@ class Piece():
     #if the move is to empty spot, there is no kill
     if not checkForPiece(x,y):
       #print the piece that moved
-      rtMessage = self.name + " moved to " + toBoard(x, y)
+      rtMessage = "\n" + self.name + " moved to " + toBoard(x, y)
       #move the piece to new position
       self.x = x
       self.y = y
@@ -41,7 +41,7 @@ class Piece():
       pieceOnSpot = getPieceAtPosition(x, y)
       if pieceOnSpot.team != self.team:
         #print kill message
-        rtMessage = pieceOnSpot.name + " killed by a " + self.name
+        rtMessage = "\n" + pieceOnSpot.name + " killed by a " + self.name
         pieceOnSpot.kill()
         #move the piece to new position
         self.x = x
