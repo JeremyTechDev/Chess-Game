@@ -97,8 +97,7 @@ def isValidPos(pos):
     return True
   elif not pos[0].isnumeric() and pos[1].isnumeric():
     return True
-  else:
-    return False
+  return False
 
 #--------------------------------------------------------------
 #return True if the choosen piece to move is able to move
@@ -159,26 +158,16 @@ prints the last move of the game.
 """
 #runs while the game is not over
 #parameter are the name of the players
-def startGame(wPlayer, bPlayer):
-  lastTurn = "b"
+def startGame(wPl, bPlayer):
+  lastTurn = "b" #to start the game with a white's turn
   while True: #set turn info
     if lastTurn == "b":
       lastTurn = "w" 
-      opTeam = "b" #oppsite team
-      teamKing = wki
-      player = wPlayer
-      opPlayer = bPlayer
-      teamName = "WHITE"
-      opTeamName = "BLACK"
+      currentPl = wPl #current player
     else:
       lastTurn = "b"
-      opTeam = "w" #oppsite team
-      teamKing = bki
-      player = bPlayer
-      opPlayer = wPlayer
-      teamName = "BLACK"
-      opTeamName = "WHITE"
-    
+      currentPl = bPl #current player
+
     board.print(None) #prints actual state of the board
 
     #if only the two kings are remainig, the game is a tie
@@ -241,7 +230,7 @@ def displayMenu():
         wPl = Player("w") #white player
         bPl = Player("b") #black player
         print("\n>>> GAME STARTED!\nGood luck, " + wPl.name + " and " + bPl.name + "!")
-        startGame(wPl.name, bPl.name)
+        startGame(wPl, bPl)
       elif choice == 2:
         howToPlay()
       elif choice == 3:
