@@ -69,7 +69,7 @@ def runTurn(team):
                       positionTo = toSys(positionTo, True)
 
                       if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                        piece.moveTo(positionTo[0], positionTo[1])
+                        print(piece.moveTo(positionTo[0], positionTo[1]))
                         break
                       else:
                         print("That move is not possible, check the list and try again")
@@ -235,7 +235,6 @@ def displayMenu():
         wPl = Player("w", wki) #white player
         bPl = Player("b", bki) #black player
         print("\n>>> GAME STARTED!\nGood luck, " + wPl.name + " and " + bPl.name + "!")
-        board = Board() #creates the board for the game
         startGame(wPl, bPl)
       elif choice == 2:
         howToPlay()
@@ -247,4 +246,5 @@ def displayMenu():
     else:
       print("Your choice must be a number [1-3]")
 
+board = Board() #creates the board for the game
 displayMenu() #start of the program
