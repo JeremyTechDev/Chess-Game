@@ -172,12 +172,15 @@ def startGame(wPl, bPlayer):
 
     #if only the two kings are remainig, the game is a tie
     if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
-      print("+++++++++++++++++++++++++++++++++++++")
-      print("              GAME OVER   ")
-      print("    TIE BETWEEN BLACKS AND WHITES")
-      print("")
-      print("Congratulations, " + opPlayer + " and " + player + "!")
-      print("+++++++++++++++++++++++++++++++++++++")
+      tieMessage = """
+      +++++++++++++++++++++++++++++++++++++
+                    GAME OVER   
+          TIE BETWEEN BLACKS AND WHITES
+      
+      Congratulations, {pl1} and {pl2}!
+      +++++++++++++++++++++++++++++++++++++
+      """.format(pl1=wPl.name, pl2=bPl.name)
+      print(tieMessage)
       exit() #ends program
 
     #if king is on check, player must protect it
@@ -185,13 +188,16 @@ def startGame(wPl, bPlayer):
       #if there are no saving moves, its a check mate and game is over
       savingMoves = teamKing.protect()
       if len(savingMoves) == 0:
-        print("+++++++++++++++++++++++++++++++++++++")
-        print("              GAME OVER   ")
-        print("       " + opTeamName + "S ARE THE WINNERS")
-        print("     CHECK MAKE ON " + teamName + "'S KING")
-        print("")
-        print("Congratulations, " + opPlayer + "!")
-        print("+++++++++++++++++++++++++++++++++++++")
+        endMessage = """
+        +++++++++++++++++++++++++++++++++++++
+                      GAME OVER
+               {winnerTeam}'S ARE THE WINNERS
+             CHECK MAKE ON {teamName}'S KING
+        
+        Congratulations!
+        +++++++++++++++++++++++++++++++++++++
+        """.format(winnerTeam=currentPl.opTeamName, teamName=currentPl.teamName)
+        print(endMessage)
         exit() #ends program
       else:
         print(teamName + " KING IS ON CHECK, PROTECT IT")
