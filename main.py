@@ -139,30 +139,30 @@ def getPlayers():
 #-----------------------------------
 #print how to play messages
 def howToPlay():
-  print(">>> HOW TO PLAY")
-  print("This is how the board looks like:")
+  print(">>> HOW TO PLAY\nThis is how the board looks like:")
   board.print(None)
-
-  print("> This is the chess board, the black pieces are shown")
-  print("  at the top and the white pieces, at the bottom.")
-  print("")
-  print("> Also, you have a legend of the pieces at the right")
-  print("")
-  print("> To play, the player on turn will have to choose the")
-  print("  piece he or she wants to move by typing its cords.")
-  print("> The cords are given by a letter and a number that are")
-  print("  both at the left and bottom of the board. Ex: G3")
-  print("")
-  print("> Then, the possible moves for the chosen piece will be")
-  print("  displayed. They are shown by ( ) instead of [ ].")
-  print("> You only have to choose one of the shown cord the same")
-  print("  way as before. Then it's the rival's turn")
-  print("")
-  print("> Now you guys are all good to start playing!")
-  print("")
-  print(">>> Press any key to go back to the main menu")
+  a = """
+  > This is the chess board, the black pieces are shown
+    at the top and the white pieces, at the bottom.
+  
+  > Also, you have a legend of the pieces at the right
+  
+  > To play, the player on turn will have to choose the
+    piece he or she wants to move by typing its cords.
+  > The cords are given by a letter and a number that are
+    both at the left and bottom of the board. Ex: G3
+  
+  > Then, the possible moves for the chosen piece will be
+    displayed. They are shown by ( ) instead of [ ].
+  > You only have to choose one of the shown cord the same
+    way as before. Then it's the rival's turn
+  
+  > Now you guys are all good to start playing!
+  
+  >>> Press any key to go back to the main menu
+  """
+  print(a)
   input()
-  print("")
   displayMenu()
 
 """
