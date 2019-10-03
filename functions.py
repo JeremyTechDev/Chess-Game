@@ -29,3 +29,23 @@ def toSys(pos, tell):
 
   if (let in listY) and 1 <= int(num) <= 8:
     return listX.index(int(num)), listY.index(let)
+
+#------------------------------------------------------
+#Returns True if there is a piece in [x][y]
+#otherwise, returns False
+def checkForPiece(x, y):
+  for piece in all_pieces:
+    if piece.onGame == True:
+      if piece.x == x and piece.y == y:
+        return True 
+  return False
+
+#------------------------------------------------------
+#Returns the piece at given position [x][y]
+#Return None if there is no piece at position [x][y]
+def getPieceAtPosition(x,y):
+  for piece in all_pieces:
+    if piece.onGame == True:
+      if piece.x == x and piece.y == y:
+        return piece
+  return None

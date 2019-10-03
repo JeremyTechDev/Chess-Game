@@ -1,7 +1,6 @@
 from piece import *
 from board import Board
 from player import Player
-#from functions import *
 
 #FUNCTIONS
 #-------------------------------------------------------
@@ -158,7 +157,7 @@ prints the last move of the game.
 """
 #runs while the game is not over
 #parameter are the name of the players
-def startGame(wPl, bPlayer):
+def startGame(wPl, bPl):
   lastTurn = "b" #to start the game with a white's turn
   while True: #set turn info
     if lastTurn == "b":
@@ -184,9 +183,9 @@ def startGame(wPl, bPlayer):
       exit() #ends program
 
     #if king is on check, player must protect it
-    if teamKing.isOnCheck():      
+    if (currentPl.king).isOnCheck():      
       #if there are no saving moves, its a check mate and game is over
-      savingMoves = teamKing.protect()
+      savingMoves = (currentPl.king).getSavingMoves()
       if len(savingMoves) == 0:
         endMessage = """
         +++++++++++++++++++++++++++++++++++++
@@ -200,11 +199,11 @@ def startGame(wPl, bPlayer):
         print(endMessage)
         exit() #ends program
       else:
-        print(teamName + " KING IS ON CHECK, PROTECT IT")
+        print(currentPl.teamName + " KING IS ON CHECK, PROTECT IT")
         #run protect king to take him out of the check position
-        runProtectKingTurn(teamKing, opTeam)
+        (currentPl.king).protect()
     else:
-      print(">>> " + teamName + "'S TURN (" + player + ")")
+      print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
       runTurn(lastTurn)
 
 #---------------------------------------------
@@ -233,9 +232,10 @@ def displayMenu():
       
       if choice == 1:
         #get players names
-        wPl = Player("w") #white player
-        bPl = Player("b") #black player
+        wPl = Player("w", wki) #white player
+        bPl = Player("b", bki) #black player
         print("\n>>> GAME STARTED!\nGood luck, " + wPl.name + " and " + bPl.name + "!")
+        board = Board() #creates the board for the game
         startGame(wPl, bPl)
       elif choice == 2:
         howToPlay()
@@ -247,5 +247,4 @@ def displayMenu():
     else:
       print("Your choice must be a number [1-3]")
 
-board = Board()
 displayMenu() #start of the program

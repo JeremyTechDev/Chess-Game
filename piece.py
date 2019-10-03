@@ -137,7 +137,7 @@ class pawn(Piece):
     possEat1 = [a,b-1] #possible Eat 1
     possEat2 = [a,b+1] #possible Eat 1
     if (checkForPiece(possEat1[0], possEat1[1]) == True): #if there is a piece
-      if (getPieceAtPosition(possEat1[0], FpossEat1[1]).team != self.team): 
+      if (getPieceAtPosition(possEat1[0], possEat1[1]).team != self.team): 
         moves.append(possEat1) #if is different team, add move
     #same with second piece
     if (checkForPiece(possEat2[0], possEat2[1]) == True):
@@ -814,24 +814,3 @@ all_white_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,
 all_black_pieces = [bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
 all_pieces = [wp1,wp2,wp3,wp4,wp5,wp6,wp7,wp8,wr1,wr2,wk1,wk2,wb1,wb2,wki,wqu,bp1,bp2,
 bp3,bp4,bp5,bp6,bp7,bp8,br1,br2,bk1,bk2,bb1,bb2,bki,bqu]
-
-
-#------------------------------------------------------
-#Returns True if there is a piece in [x][y]
-#otherwise, returns False
-def checkForPiece(x, y):
-  for piece in all_pieces:
-    if piece.onGame == True:
-      if piece.x == x and piece.y == y:
-        return True 
-  return False
-
-#------------------------------------------------------
-#Returns the piece at given position [x][y]
-#Return None if there is no piece at position [x][y]
-def getPieceAtPosition(x,y):
-  for piece in all_pieces:
-    if piece.onGame == True:
-      if piece.x == x and piece.y == y:
-        return piece
-  return None
