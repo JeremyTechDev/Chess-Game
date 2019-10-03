@@ -1,5 +1,6 @@
 from piece import *
 from board import Board
+from player import Player
 #from functions import *
 
 #FUNCTIONS
@@ -113,28 +114,6 @@ def validateForPiece(piecePosition, team):
       return False
 
   return True
-  
-#----------------------------------
-#get the name of the players
-#avoids blank space inputs
-def getPlayers():
-  print("Insert a nickname for the WHITES PLAYER:")
-  while True:
-    wPlayer = input()
-    if wPlayer != "" and wPlayer != " ":
-      break
-    else:
-      print("Please, insert a valid name")
-
-  print("Insert a nickname for the BLACKS PLAYER:")
-  while True:
-    bPlayer = input()
-    if bPlayer != "" and bPlayer != " ":
-      break
-    else:
-      print("Please, insert a valid name")
-    
-  return wPlayer, bPlayer
 
 #-----------------------------------
 #print how to play messages
@@ -237,17 +216,19 @@ def startGame(wPlayer, bPlayer):
 #           START OF THE PROGRAM
 #---------------------------------------------
 def displayMenu():
-  print("++++++++++++++++++++++++++++++++++++")
-  print("             CHESS GAME")
-  print("")
-  print("           1. Start Game")
-  print("           2. How to Play")
-  print("")
-  print("              3. Exit")
-  print("")
-  print("                              by Jem")
-  print("++++++++++++++++++++++++++++++++++++")
-  print("Choose an option:")
+  menu = """
+  ++++++++++++++++++++++++++++++++++++
+               CHESS GAME
+  
+             1. Start Game
+             2. How to Play
+
+                3. Exit
+  
+                                by Jem
+  ++++++++++++++++++++++++++++++++++++
+  Choose an option:"""
+  print(menu)
 
   while True:
     choice = input()
@@ -257,11 +238,10 @@ def displayMenu():
       
       if choice == 1:
         #get players names
-        players = getPlayers()
-        print("")
-        print(">>> GAME STARTED!")
-        print("Good luck, " + players[0] + " and " + players[1] + "!")
-        startGame(players[0], players[1])
+        wPl = Player("w") #white player
+        bPl = Player("b") #black player
+        print("\n>>> GAME STARTED!\nGood luck, " + wPl.name + " and " + bPl.name + "!")
+        startGame(wPl.name, bPl.name)
       elif choice == 2:
         howToPlay()
       elif choice == 3:
