@@ -58,7 +58,7 @@ Choose an option:"""
     def getPieceToMove(self, team):
         while True:
             print("\nInsert the position of the piece to move:")
-            piecePosition = input()
+            piecePosition = input() #the only user interaction for this function
 
             #make sure input is not only one character or digit
             if len(piecePosition) == 0 or len(piecePosition) == 1:
@@ -98,7 +98,7 @@ Choose an option:"""
     
     #---------------------------------------------
     #Ask the user to choose one of the possible moves to the piece chose before
-    def getPositionTo(self, piece, team):
+    def getPositionTo(self, piece, team, currentPl):
         #get all possible moves to check if there are moves indeed
         allPossibleMoves = piece.getMoves()
         #if piece is a king, discard check moves
@@ -112,7 +112,7 @@ Choose an option:"""
         print('\nInsert "0" if you want to choose a different piece.')
 
         while True:
-            positionTo = input()
+            positionTo = input() #the only user interaction for this function
 
             #make sure input is not only one character or digit
             if len(positionTo) == 0 or (positionTo != "0" and len(positionTo) == 1):
@@ -120,9 +120,9 @@ Choose an option:"""
             else:
                 #if users wants to change piece, go back
                 if positionTo == "0":
-                    board.print(None)
-                    exit() #'####################3
-                    #break
+                    (self.board).print(None)
+                    self.runTurn(currentPl)
+                    break
 
                 if self.isValidPos(positionTo):
                     if toSys(positionTo, False):
@@ -135,8 +135,6 @@ Choose an option:"""
                         print("Invaid position, try another one")
                 else:
                     print("Not a valid position, try another one.")
-
-                break #finish checking while
 
 
     #--------------------------------------------------------------
@@ -162,6 +160,16 @@ Choose an option:"""
                 return False
 
         return True
+
+    #----------------------------------
+    def runTurn(self, currentPl):
+        piece = self.getPieceToMove(currentPl.team) #get piece to move
+        to = self.getPositionTo(piece, currentPl.team, currentPl) #get the possito to move to
+        try:
+            print(piece.moveTo(to[0], to[1])) #move the piece and prints a state
+        except:
+            pass
+
 
     #-----------------------------------
     #print how to play messages
@@ -248,9 +256,4 @@ Choose an option:"""
                     (currentPl.king).protect()
             else:
                 print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
-                piece = self.getPieceToMove(currentPl.team) #get piece to move
-                to = self.getPositionTo(piece, currentPl.team)
-                print(piece.moveTo(to[0], to[1]))
-
-game = Game()
-game.displayMenu() #start of the program
+                self.runTurn(currentPl)
