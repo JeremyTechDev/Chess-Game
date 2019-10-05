@@ -62,6 +62,17 @@ class Piece():
     return rtMessage #to print the move 
 
   #------------------------------------------------------
+  #prints the possible moves for a piece
+  def printPossibleMoves(self):
+      allPossibleMoves = self.getMoves()
+      #shows choices for the move of the piece
+      print("Chose your next move for the " + self.name +":")
+      for move in allPossibleMoves:
+          posX = move[0]
+          posY = move[1]
+          print(">>> " + toBoard(posX, posY))
+
+  #------------------------------------------------------
   #Discards all imposible moves for any piece
   def discardImMoves(self, moves):
     toDelete = []

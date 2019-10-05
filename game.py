@@ -52,11 +52,12 @@ way as before. Then it's the rival's turn
 Choose an option:"""
         self.board = Board() #creates the board for the game
 
-    def runTurn(self, team):
-        #checks that the user's choice is ok and that there are moves for that piece
+    #-------------------------------------------------
+    #Ask the user to insert the position of the piece to move.
+    #And checks that it is possible to move that piece.
+    def getPieceToMove(self, team):
         while True:
-            print("")
-            print("Insert the position of the piece to move:")
+            print("\nInsert the position of the piece to move:")
             piecePosition = input()
 
             #make sure input is not only one character or digit
@@ -74,11 +75,11 @@ Choose an option:"""
                             #set piece position [x][y]
                             x = piecePosition[0]
                             y = piecePosition[1]
-                            #get the specific piece
+                            #return the specific piece
                             piece = getPieceAtPosition(x, y)
-                            #find all moves for the piece after finding the piece type with getMoveFunction(piece)
+                            
+                            #get all possible moves to check if there are moves indeed
                             allPossibleMoves = piece.getMoves()
-
                             #if piece is a king, discard check moves
                             if piece.__class__ == king:
                                 allPossibleMoves = piece.discardCheckMoves(allPossibleMoves)
@@ -86,54 +87,57 @@ Choose an option:"""
                             if len(allPossibleMoves) == 0:
                                 print("No possible moves for " + piece.name + ", try another one")
                             else:
-                                #prints the board showing the possible moves of the piece chosen as ( )
-                                (self.board).print(allPossibleMoves)
-
-                                #shows choices for the move of the piece
-                                print("Chose your next move for the " + piece.name +":")
-                                for move in allPossibleMoves:
-                                    posX = move[0]
-                                    posY = move[1]
-                                    print(">>> " + toBoard(posX, posY))
-                                #shows a option in case user what to change piece
-                                print("")
-                                print('Insert "0" if you want to chose another piece')
-                                
-                                #read the position to
-                                while True:
-                                    positionTo = input()
-
-                                    #make sure input is not only one character or digit
-                                    if len(positionTo) == 0:
-                                        print("The input should be one letter and one digit, try again")
-                                    else:
-                                        if positionTo == "0":
-                                            board.print(None)
-                                            self.runTurn(team)
-                                            break
-                                        
-                                        if self.isValidPos(positionTo):
-                                            if toSys(positionTo, False):
-                                                positionTo = toSys(positionTo, True)
-                                                if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                                                    print(piece.moveTo(positionTo[0], positionTo[1]))
-                                                    break
-                                                else:
-                                                    print("That move is not possible, check the list and try again")
-                                            else:
-                                                print("Invaid position, try another one")
-                                        else:
-                                            print("Not a valid position, try another one.")
-
-                                break #finishes the while with all success by the user
-
+                                #return the piece
+                                return piece
                         else:
                             print("Empty spot, try another one")
-
                     else:
                         print("Invaid position, try another one")
                 else:
                     print("Not a valid position, try another one.")
+    
+    #---------------------------------------------
+    #Ask the user to choose one of the possible moves to the piece chose before
+    def getPositionTo(self, piece, team):
+        #get all possible moves to check if there are moves indeed
+        allPossibleMoves = piece.getMoves()
+        #if piece is a king, discard check moves
+        if piece.__class__ == king:
+            allPossibleMoves = piece.discardCheckMoves(allPossibleMoves)
+
+        (self.board).print(allPossibleMoves) #print board with possible moves
+
+        piece.printPossibleMoves() #print the possible moves
+
+        print('\nInsert "0" if you want to choose a different piece.')
+
+        while True:
+            positionTo = input()
+
+            #make sure input is not only one character or digit
+            if len(positionTo) == 0 or (positionTo != "0" and len(positionTo) == 1):
+                print("The input should be one letter and one digit, try again")
+            else:
+                #if users wants to change piece, go back
+                if positionTo == "0":
+                    board.print(None)
+                    exit() #'####################3
+                    #break
+
+                if self.isValidPos(positionTo):
+                    if toSys(positionTo, False):
+                        positionTo = toSys(positionTo, True)
+                        if [positionTo[0], positionTo[1]] in allPossibleMoves:
+                            return positionTo
+                        else:
+                            print("That move is not possible, check the list and try again")
+                    else:
+                        print("Invaid position, try another one")
+                else:
+                    print("Not a valid position, try another one.")
+
+                break #finish checking while
+
 
     #--------------------------------------------------------------
     #return true is the pos const of a letter and a number
@@ -162,12 +166,14 @@ Choose an option:"""
     #-----------------------------------
     #print how to play messages
     def printHowToPlay(self):
-        print(">>> HOW TO PLAY\nThis is how the board looks like:") #title
+        print(">>> HOW TO PLAY\nThis is how the board looks like:") #header
         (self.board).print(None) #print board for example
-        print(self.howToPlay)
+        print(self.howToPlay) #display how to play message
         input() #wait to quit menu
-        self.displayMenu()
+        self.displayMenu() #go back to main menu
 
+    #--------------------------------------
+    #displays menu and waits for the user's choice
     def displayMenu(self):
         print(self.menu) #display menu options
 
@@ -242,4 +248,9 @@ Choose an option:"""
                     (currentPl.king).protect()
             else:
                 print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
-                self.runTurn(lastTurn)
+                piece = self.getPieceToMove(currentPl.team) #get piece to move
+                to = self.getPositionTo(piece, currentPl.team)
+                print(piece.moveTo(to[0], to[1]))
+
+game = Game()
+game.displayMenu() #start of the program
