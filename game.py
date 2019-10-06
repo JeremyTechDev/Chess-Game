@@ -51,6 +51,86 @@ way as before. Then it's the rival's turn
 ++++++++++++++++++++++++++++++++++++
 Choose an option:"""
         self.board = Board() #creates the board for the game
+        #get players names
+        self.wPl = Player("w", wki) #white player
+        self.bPl = Player("b", bki) #black player
+
+    #--------------------------------------
+    #displays menu and waits for the user's choice
+    def displayMenu(self):
+        print(self.menu) #display menu options
+
+        while True:
+            choice = input() #ask the user his or her choice from the main menu
+
+            if choice != "" and choice.isnumeric():
+                choice = int(choice)
+                
+                if choice == 1:
+                    print("\n>>> GAME STARTED!\nGood luck, " + self.wPl.name + " and " + self.bPl.name + "!")
+                    self.startGame(self.wPl, self.bPl) #starts the game
+                elif choice == 2:
+                    self.printHowToPlay()
+                elif choice == 3:
+                    print(">>> THANKS FOR PLAYING, COME BACK SOON!")
+                    exit() #ends the program
+                else:
+                    print("Your choice must be a number between 1 and 3")
+            else:
+                print("Your choice must be a number [1-3]")
+
+    #-------------------------------------------------
+    #runs while the game is not over
+    #parameter are the name of the players
+    def startGame(self, wPl, bPl):
+        lastTurn = "b" #to start the game with a white's turn
+        while True: #set turn info
+            if lastTurn == "b":
+                lastTurn = "w" 
+                currentPl = self.wPl #current player
+            else:
+                lastTurn = "b"
+                currentPl = self.bPl #current player
+
+            (self.board).print(None) #prints actual state of the board
+
+            #check if game finish in tied
+            if self.gameIsTied() != False:
+                print(self.gameIsTied()) #print tie message
+                exit() #end the program
+
+            #if king is on check, player must protect it
+            if (currentPl.king).isOnCheck():      
+                if (self.gameIsOver(currentPl) != False):
+                    print(self.gameIsOver(currentPl)) #print end message
+                    exit() #end program
+                else:
+                    print(currentPl.teamName + " KING IS ON CHECK, PROTECT IT")
+                    #run protect king to take him out of the check position
+                    (currentPl.king).protect()
+            else:
+                #if king is not on check, them rus a regular turn
+                print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
+                self.runTurn(currentPl)
+
+    #----------------------------------
+    #runs a turn for the current player's team
+    def runTurn(self, currentPl):
+        piece = self.getPieceToMove(currentPl.team) #get piece to move
+        to = self.getPositionTo(piece, currentPl.team, currentPl) #get the possito to move to
+        try:
+            print(piece.moveTo(to[0], to[1])) #move the piece and prints a state
+        except:
+            pass
+
+    #-----------------------------------
+    #print how to play messages
+    def printHowToPlay(self):
+        print(">>> HOW TO PLAY\nThis is how the board looks like:") #header
+        (self.board).print(None) #print board for example
+        print(self.howToPlay) #display how to play message
+        input() #wait to quit menu
+        self.displayMenu() #go back to main menu
 
     #-------------------------------------------------
     #Ask the user to insert the position of the piece to move.
@@ -136,7 +216,6 @@ Choose an option:"""
                 else:
                     print("Not a valid position, try another one.")
 
-
     #--------------------------------------------------------------
     #return true is the pos const of a letter and a number
     def isValidPos(self, pos):
@@ -158,87 +237,7 @@ Choose an option:"""
         else:
             if getPieceAtPosition(x, y).team != team:
                 return False
-
         return True
-
-    #----------------------------------
-    def runTurn(self, currentPl):
-        piece = self.getPieceToMove(currentPl.team) #get piece to move
-        to = self.getPositionTo(piece, currentPl.team, currentPl) #get the possito to move to
-        try:
-            print(piece.moveTo(to[0], to[1])) #move the piece and prints a state
-        except:
-            pass
-
-
-    #-----------------------------------
-    #print how to play messages
-    def printHowToPlay(self):
-        print(">>> HOW TO PLAY\nThis is how the board looks like:") #header
-        (self.board).print(None) #print board for example
-        print(self.howToPlay) #display how to play message
-        input() #wait to quit menu
-        self.displayMenu() #go back to main menu
-
-    #--------------------------------------
-    #displays menu and waits for the user's choice
-    def displayMenu(self):
-        print(self.menu) #display menu options
-
-        while True:
-            choice = input()
-
-            if choice != "" and choice.isnumeric():
-                choice = int(choice)
-                
-                if choice == 1:
-                    #get players names
-                    wPl = Player("w", wki) #white player
-                    bPl = Player("b", bki) #black player
-                    print("\n>>> GAME STARTED!\nGood luck, " + wPl.name + " and " + bPl.name + "!")
-                    self.startGame(wPl, bPl) #starts the game
-                elif choice == 2:
-                    self.printHowToPlay()
-                elif choice == 3:
-                    print(">>> THANKS FOR PLAYING, COME BACK SOON!")
-                    exit() #ends the program
-                else:
-                    print("Your choice must be a number between 1 and 3")
-            else:
-                print("Your choice must be a number [1-3]")
-
-    #runs while the game is not over
-    #parameter are the name of the players
-    def startGame(self, wPl, bPl):
-        lastTurn = "b" #to start the game with a white's turn
-        while True: #set turn info
-            if lastTurn == "b":
-                lastTurn = "w" 
-                currentPl = wPl #current player
-            else:
-                lastTurn = "b"
-                currentPl = bPl #current player
-
-            (self.board).print(None) #prints actual state of the board
-
-            #check if game finish in tied
-            if self.gameIsTied() != False:
-                print(self.gameIsTied()) #print tie message
-                exit() #end the program
-
-            #if king is on check, player must protect it
-            if (currentPl.king).isOnCheck():      
-                if (self.gameIsOver() != False):
-                    print(self.gameIsOver()) #print end message
-                    exit() #end program
-                else:
-                    print(currentPl.teamName + " KING IS ON CHECK, PROTECT IT")
-                    #run protect king to take him out of the check position
-                    (currentPl.king).protect()
-            else:
-                #if king is not on check, them rus a regular turn
-                print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
-                self.runTurn(currentPl)
 
     #-------------------------------
     #returns tie message is the game is a tie, False otherwise
@@ -246,36 +245,33 @@ Choose an option:"""
         #if only the two kings are remainig, the game is a tie
         if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
             tieMessage = """
-            +++++++++++++++++++++++++++++++++++++
-                            GAME OVER   
-                TIE BETWEEN BLACKS AND WHITES
-            
-            Congratulations, {pl1} and {pl2}!
-            +++++++++++++++++++++++++++++++++++++
-            """.format(pl1=wPl.name, pl2=bPl.name)
+        +++++++++++++++++++++++++++++++++++++
+                        GAME OVER   
+            TIE BETWEEN BLACKS AND WHITES
+        
+        Congratulations, {pl1} and {pl2}!
+        +++++++++++++++++++++++++++++++++++++
+            """.format(pl1=self.wPl.name, pl2=self.bPl.name)
             return tieMessage
         
         return False
     
     #-----------------------------------------
     #return gameover message is game is over, false otherwise
-    def gameIsOver(self):
+    def gameIsOver(self, currentPl):
         #if there are no saving moves, its a check mate and game is over
         savingMoves = (currentPl.king).getSavingMoves()
 
         if len(savingMoves) == 0:
             endMessage = """
-            +++++++++++++++++++++++++++++++++++++
-                        GAME OVER
-                {winnerTeam}'S ARE THE WINNERS
-                CHECK MAKE ON {teamName}'S KING
-            
-            Congratulations!
-            +++++++++++++++++++++++++++++++++++++
+        +++++++++++++++++++++++++++++++++++++
+                    GAME OVER
+            {winnerTeam}'S ARE THE WINNERS
+            CHECK MAKE ON {teamName}'S KING
+        
+        Congratulations!
+        +++++++++++++++++++++++++++++++++++++
             """.format(winnerTeam=currentPl.opTeamName, teamName=currentPl.teamName)
-
             return endMessage
         
         return False
-
-    
