@@ -228,30 +228,20 @@ Choose an option:"""
 
             #if king is on check, player must protect it
             if (currentPl.king).isOnCheck():      
-                #if there are no saving moves, its a check mate and game is over
-                savingMoves = (currentPl.king).getSavingMoves()
-                if len(savingMoves) == 0:
-                    endMessage = """
-                    +++++++++++++++++++++++++++++++++++++
-                                GAME OVER
-                        {winnerTeam}'S ARE THE WINNERS
-                        CHECK MAKE ON {teamName}'S KING
-                    
-                    Congratulations!
-                    +++++++++++++++++++++++++++++++++++++
-                    """.format(winnerTeam=currentPl.opTeamName, teamName=currentPl.teamName)
-                    print(endMessage)
-                    exit() #ends program
+                if (self.gameIsOver() != False):
+                    print(self.gameIsOver()) #print end message
+                    exit() #end program
                 else:
                     print(currentPl.teamName + " KING IS ON CHECK, PROTECT IT")
                     #run protect king to take him out of the check position
                     (currentPl.king).protect()
             else:
+                #if king is not on check, them rus a regular turn
                 print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
                 self.runTurn(currentPl)
 
     #-------------------------------
-    #returns True is the game is a tie, False otherwise
+    #returns tie message is the game is a tie, False otherwise
     def gameIsTied(self):
         #if only the two kings are remainig, the game is a tie
         if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
@@ -264,6 +254,27 @@ Choose an option:"""
             +++++++++++++++++++++++++++++++++++++
             """.format(pl1=wPl.name, pl2=bPl.name)
             return tieMessage
+        
+        return False
+    
+    #-----------------------------------------
+    #return gameover message is game is over, false otherwise
+    def gameIsOver(self):
+        #if there are no saving moves, its a check mate and game is over
+        savingMoves = (currentPl.king).getSavingMoves()
+
+        if len(savingMoves) == 0:
+            endMessage = """
+            +++++++++++++++++++++++++++++++++++++
+                        GAME OVER
+                {winnerTeam}'S ARE THE WINNERS
+                CHECK MAKE ON {teamName}'S KING
+            
+            Congratulations!
+            +++++++++++++++++++++++++++++++++++++
+            """.format(winnerTeam=currentPl.opTeamName, teamName=currentPl.teamName)
+
+            return endMessage
         
         return False
 
