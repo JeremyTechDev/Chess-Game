@@ -121,14 +121,14 @@ Choose an option:"""
                 #if users wants to change piece, go back
                 if positionTo == "0":
                     (self.board).print(None)
-                    self.runTurn(currentPl)
+                    self.runTurn(currentPl) #run again to change piece
                     break
 
                 if self.isValidPos(positionTo):
                     if toSys(positionTo, False):
                         positionTo = toSys(positionTo, True)
                         if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                            return positionTo
+                            return positionTo #return item
                         else:
                             print("That move is not possible, check the list and try again")
                     else:
@@ -221,18 +221,10 @@ Choose an option:"""
 
             (self.board).print(None) #prints actual state of the board
 
-            #if only the two kings are remainig, the game is a tie
-            if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
-                tieMessage = """
-                +++++++++++++++++++++++++++++++++++++
-                                GAME OVER   
-                    TIE BETWEEN BLACKS AND WHITES
-                
-                Congratulations, {pl1} and {pl2}!
-                +++++++++++++++++++++++++++++++++++++
-                """.format(pl1=wPl.name, pl2=bPl.name)
-                print(tieMessage)
-                exit() #ends program
+            #check if game finish in tied
+            if self.gameIsTied() != False:
+                print(self.gameIsTied()) #print tie message
+                exit() #end the program
 
             #if king is on check, player must protect it
             if (currentPl.king).isOnCheck():      
@@ -257,3 +249,22 @@ Choose an option:"""
             else:
                 print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
                 self.runTurn(currentPl)
+
+    #-------------------------------
+    #returns True is the game is a tie, False otherwise
+    def gameIsTied(self):
+        #if only the two kings are remainig, the game is a tie
+        if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
+            tieMessage = """
+            +++++++++++++++++++++++++++++++++++++
+                            GAME OVER   
+                TIE BETWEEN BLACKS AND WHITES
+            
+            Congratulations, {pl1} and {pl2}!
+            +++++++++++++++++++++++++++++++++++++
+            """.format(pl1=wPl.name, pl2=bPl.name)
+            return tieMessage
+        
+        return False
+
+    
