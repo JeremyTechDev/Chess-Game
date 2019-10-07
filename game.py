@@ -36,7 +36,7 @@ way as before. Then it's the rival's turn
 
 > Now you guys are all good to start playing!
 
->>> Press any key to go back to the main menu
+>>> Press ENTER to go back to the main menu
         """
         self.menu = """
 ++++++++++++++++++++++++++++++++++++
@@ -51,13 +51,94 @@ way as before. Then it's the rival's turn
 ++++++++++++++++++++++++++++++++++++
 Choose an option:"""
         self.board = Board() #creates the board for the game
+        #get players names
+        self.wPl = Player("w", wki) #white player
+        self.bPl = Player("b", bki) #black player
 
-    def runTurn(self, team):
-        #checks that the user's choice is ok and that there are moves for that piece
+    #--------------------------------------
+    #displays menu and waits for the user's choice
+    def displayMenu(self):
+        print(self.menu) #display menu options
+
         while True:
-            print("")
-            print("Insert the position of the piece to move:")
-            piecePosition = input()
+            choice = input() #ask the user his or her choice from the main menu
+
+            if choice != "" and choice.isnumeric():
+                choice = int(choice)
+                
+                if choice == 1:
+                    print("\n>>> GAME STARTED!\nGood luck, " + self.wPl.name + " and " + self.bPl.name + "!")
+                    self.startGame(self.wPl, self.bPl) #starts the game
+                elif choice == 2:
+                    self.printHowToPlay()
+                elif choice == 3:
+                    print(">>> THANKS FOR PLAYING, COME BACK SOON!")
+                    exit() #ends the program
+                else:
+                    print("Your choice must be a number between 1 and 3")
+            else:
+                print("Your choice must be a number [1-3]")
+
+    #-------------------------------------------------
+    #runs while the game is not over
+    #parameter are the name of the players
+    def startGame(self, wPl, bPl):
+        lastTurn = "b" #to start the game with a white's turn
+        while True: #set turn info
+            if lastTurn == "b":
+                lastTurn = "w" 
+                currentPl = self.wPl #current player
+            else:
+                lastTurn = "b"
+                currentPl = self.bPl #current player
+
+            (self.board).print(None) #prints actual state of the board
+
+            #check if game finish in tied
+            if self.gameIsTied() != False:
+                print(self.gameIsTied()) #print tie message
+                exit() #end the program
+
+            #if king is on check, player must protect it
+            if (currentPl.king).isOnCheck():      
+                if (self.gameIsOver(currentPl) != False):
+                    print(self.gameIsOver(currentPl)) #print end message
+                    exit() #end program
+                else:
+                    print(currentPl.teamName + " KING IS ON CHECK, PROTECT IT")
+                    #run protect king to take him out of the check position
+                    (currentPl.king).protect()
+            else:
+                #if king is not on check, them rus a regular turn
+                print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
+                self.runTurn(currentPl)
+
+    #----------------------------------
+    #runs a turn for the current player's team
+    def runTurn(self, currentPl):
+        piece = self.getPieceToMove(currentPl.team) #get piece to move
+        to = self.getPositionTo(piece, currentPl.team, currentPl) #get the possito to move to
+        try:
+            print(piece.moveTo(to[0], to[1])) #move the piece and prints a state
+        except:
+            pass
+
+    #-----------------------------------
+    #print how to play messages
+    def printHowToPlay(self):
+        print(">>> HOW TO PLAY\nThis is how the board looks like:") #header
+        (self.board).print(None) #print board for example
+        print(self.howToPlay) #display how to play message
+        input() #wait to quit menu
+        self.displayMenu() #go back to main menu
+
+    #-------------------------------------------------
+    #Ask the user to insert the position of the piece to move.
+    #And checks that it is possible to move that piece.
+    def getPieceToMove(self, team):
+        while True:
+            print("\nInsert the position of the piece to move:")
+            piecePosition = input() #the only user interaction for this function
 
             #make sure input is not only one character or digit
             if len(piecePosition) == 0 or len(piecePosition) == 1:
@@ -74,11 +155,11 @@ Choose an option:"""
                             #set piece position [x][y]
                             x = piecePosition[0]
                             y = piecePosition[1]
-                            #get the specific piece
+                            #return the specific piece
                             piece = getPieceAtPosition(x, y)
-                            #find all moves for the piece after finding the piece type with getMoveFunction(piece)
+                            
+                            #get all possible moves to check if there are moves indeed
                             allPossibleMoves = piece.getMoves()
-
                             #if piece is a king, discard check moves
                             if piece.__class__ == king:
                                 allPossibleMoves = piece.discardCheckMoves(allPossibleMoves)
@@ -86,50 +167,50 @@ Choose an option:"""
                             if len(allPossibleMoves) == 0:
                                 print("No possible moves for " + piece.name + ", try another one")
                             else:
-                                #prints the board showing the possible moves of the piece chosen as ( )
-                                (self.board).print(allPossibleMoves)
-
-                                #shows choices for the move of the piece
-                                print("Chose your next move for the " + piece.name +":")
-                                for move in allPossibleMoves:
-                                    posX = move[0]
-                                    posY = move[1]
-                                    print(">>> " + toBoard(posX, posY))
-                                #shows a option in case user what to change piece
-                                print("")
-                                print('Insert "0" if you want to chose another piece')
-                                
-                                #read the position to
-                                while True:
-                                    positionTo = input()
-
-                                    #make sure input is not only one character or digit
-                                    if len(positionTo) == 0:
-                                        print("The input should be one letter and one digit, try again")
-                                    else:
-                                        if positionTo == "0":
-                                            board.print(None)
-                                            self.runTurn(team)
-                                            break
-                                        
-                                        if self.isValidPos(positionTo):
-                                            if toSys(positionTo, False):
-                                                positionTo = toSys(positionTo, True)
-                                                if [positionTo[0], positionTo[1]] in allPossibleMoves:
-                                                    print(piece.moveTo(positionTo[0], positionTo[1]))
-                                                    break
-                                                else:
-                                                    print("That move is not possible, check the list and try again")
-                                            else:
-                                                print("Invaid position, try another one")
-                                        else:
-                                            print("Not a valid position, try another one.")
-
-                                break #finishes the while with all success by the user
-
+                                #return the piece
+                                return piece
                         else:
                             print("Empty spot, try another one")
+                    else:
+                        print("Invaid position, try another one")
+                else:
+                    print("Not a valid position, try another one.")
+    
+    #---------------------------------------------
+    #Ask the user to choose one of the possible moves to the piece chose before
+    def getPositionTo(self, piece, team, currentPl):
+        #get all possible moves to check if there are moves indeed
+        allPossibleMoves = piece.getMoves()
+        #if piece is a king, discard check moves
+        if piece.__class__ == king:
+            allPossibleMoves = piece.discardCheckMoves(allPossibleMoves)
 
+        (self.board).print(allPossibleMoves) #print board with possible moves
+
+        piece.printPossibleMoves() #print the possible moves
+
+        print('\nInsert "0" if you want to choose a different piece.')
+
+        while True:
+            positionTo = input() #the only user interaction for this function
+
+            #make sure input is not only one character or digit
+            if len(positionTo) == 0 or (positionTo != "0" and len(positionTo) == 1):
+                print("The input should be one letter and one digit, try again")
+            else:
+                #if users wants to change piece, go back
+                if positionTo == "0":
+                    (self.board).print(None)
+                    self.runTurn(currentPl) #run again to change piece
+                    break
+
+                if self.isValidPos(positionTo):
+                    if toSys(positionTo, False):
+                        positionTo = toSys(positionTo, True)
+                        if [positionTo[0], positionTo[1]] in allPossibleMoves:
+                            return positionTo #return item
+                        else:
+                            print("That move is not possible, check the list and try again")
                     else:
                         print("Invaid position, try another one")
                 else:
@@ -156,90 +237,41 @@ Choose an option:"""
         else:
             if getPieceAtPosition(x, y).team != team:
                 return False
-
         return True
 
-    #-----------------------------------
-    #print how to play messages
-    def printHowToPlay(self):
-        print(">>> HOW TO PLAY\nThis is how the board looks like:") #title
-        (self.board).print(None) #print board for example
-        print(self.howToPlay)
-        input() #wait to quit menu
-        self.displayMenu()
+    #-------------------------------
+    #returns tie message is the game is a tie, False otherwise
+    def gameIsTied(self):
+        #if only the two kings are remainig, the game is a tie
+        if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
+            tieMessage = """
+        +++++++++++++++++++++++++++++++++++++
+                        GAME OVER   
+            TIE BETWEEN BLACKS AND WHITES
+        
+        Congratulations, {pl1} and {pl2}!
+        +++++++++++++++++++++++++++++++++++++
+            """.format(pl1=self.wPl.name, pl2=self.bPl.name)
+            return tieMessage
+        
+        return False
+    
+    #-----------------------------------------
+    #return gameover message is game is over, false otherwise
+    def gameIsOver(self, currentPl):
+        #if there are no saving moves, its a check mate and game is over
+        savingMoves = (currentPl.king).getSavingMoves()
 
-    def displayMenu(self):
-        print(self.menu) #display menu options
-
-        while True:
-            choice = input()
-
-            if choice != "" and choice.isnumeric():
-                choice = int(choice)
-                
-                if choice == 1:
-                    #get players names
-                    wPl = Player("w", wki) #white player
-                    bPl = Player("b", bki) #black player
-                    print("\n>>> GAME STARTED!\nGood luck, " + wPl.name + " and " + bPl.name + "!")
-                    self.startGame(wPl, bPl) #starts the game
-                elif choice == 2:
-                    self.printHowToPlay()
-                elif choice == 3:
-                    print(">>> THANKS FOR PLAYING, COME BACK SOON!")
-                    exit() #ends the program
-                else:
-                    print("Your choice must be a number between 1 and 3")
-            else:
-                print("Your choice must be a number [1-3]")
-
-    #runs while the game is not over
-    #parameter are the name of the players
-    def startGame(self, wPl, bPl):
-        lastTurn = "b" #to start the game with a white's turn
-        while True: #set turn info
-            if lastTurn == "b":
-                lastTurn = "w" 
-                currentPl = wPl #current player
-            else:
-                lastTurn = "b"
-                currentPl = bPl #current player
-
-            (self.board).print(None) #prints actual state of the board
-
-            #if only the two kings are remainig, the game is a tie
-            if (all_black_pieces == [bki]) and (all_white_pieces == [wki]):
-                tieMessage = """
-                +++++++++++++++++++++++++++++++++++++
-                                GAME OVER   
-                    TIE BETWEEN BLACKS AND WHITES
-                
-                Congratulations, {pl1} and {pl2}!
-                +++++++++++++++++++++++++++++++++++++
-                """.format(pl1=wPl.name, pl2=bPl.name)
-                print(tieMessage)
-                exit() #ends program
-
-            #if king is on check, player must protect it
-            if (currentPl.king).isOnCheck():      
-                #if there are no saving moves, its a check mate and game is over
-                savingMoves = (currentPl.king).getSavingMoves()
-                if len(savingMoves) == 0:
-                    endMessage = """
-                    +++++++++++++++++++++++++++++++++++++
-                                GAME OVER
-                        {winnerTeam}'S ARE THE WINNERS
-                        CHECK MAKE ON {teamName}'S KING
-                    
-                    Congratulations!
-                    +++++++++++++++++++++++++++++++++++++
-                    """.format(winnerTeam=currentPl.opTeamName, teamName=currentPl.teamName)
-                    print(endMessage)
-                    exit() #ends program
-                else:
-                    print(currentPl.teamName + " KING IS ON CHECK, PROTECT IT")
-                    #run protect king to take him out of the check position
-                    (currentPl.king).protect()
-            else:
-                print(">>> " + currentPl.teamName + "'S TURN (" + currentPl.name + ")")
-                self.runTurn(lastTurn)
+        if len(savingMoves) == 0:
+            endMessage = """
+        +++++++++++++++++++++++++++++++++++++
+                    GAME OVER
+            {winnerTeam}'S ARE THE WINNERS
+            CHECK MAKE ON {teamName}'S KING
+        
+        Congratulations!
+        +++++++++++++++++++++++++++++++++++++
+            """.format(winnerTeam=currentPl.opTeamName, teamName=currentPl.teamName)
+            return endMessage
+        
+        return False
