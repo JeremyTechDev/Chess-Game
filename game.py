@@ -36,7 +36,7 @@ way as before. Then it's the rival's turn
 
 > Now you guys are all good to start playing!
 
->>> Press any key to go back to the main menu
+>>> Press ENTER to go back to the main menu
         """
         self.menu = """
 ++++++++++++++++++++++++++++++++++++
